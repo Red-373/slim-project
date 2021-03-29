@@ -9,3 +9,5 @@ $builder = new ContainerBuilder();
 $builder->addDefinitions(require_once (__DIR__ . '/dependencies.php'));
 
 $container = $builder->build();
+
+return $container;
