@@ -1,12 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
-use Laminas\ServiceManager\ServiceManager;
+use DI\ContainerBuilder;
 
-$config = require(__DIR__ . '/config.php');
+$builder = new ContainerBuilder();
 
-$container = new ServiceManager($config['dependencies']);
+$builder->addDefinitions(require_once (__DIR__ . '/dependencies.php'));
 
-$container->setService('config', $config);
-
-return $container;
+$container = $builder->build();
