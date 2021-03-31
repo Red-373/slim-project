@@ -27,3 +27,9 @@ images-rm:
 
 delete-all:
 	docker system prune -af
+
+test:
+	 docker-compose run --rm api-php-cli vendor/bin/phpunit --colors=always
+
+test-coverage:
+	docker-compose run --rm api-php-cli vendor/bin/phpunit --color=always --coverage-html var/coverage

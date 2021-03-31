@@ -13,7 +13,11 @@ class NameType
     public function __construct(string $value)
     {
         if (!preg_match('/^[a-zA-Zа-яА-Яа]+$/u', $value)) {
-            throw new InvalidArgumentException('The name cannot contain numbers');
+            throw new InvalidArgumentException('The name can have only letters and no have spaces.');
+        }
+
+        if (3 > mb_strlen($value)) {
+            throw new InvalidArgumentException('The name cannot be less 3 symbols');
         }
 
         $this->value = $value;
