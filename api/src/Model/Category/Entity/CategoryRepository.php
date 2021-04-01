@@ -6,52 +6,39 @@ namespace App\Model\Category\Entity;
 
 use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use InvalidArgumentException;
 
 class CategoryRepository
 {
-    /** @var Category[] */
-    private array $categories;
+    private EntityManagerInterface $em;
+    private EntityRepository $repo;
 
-    public function __construct()
+    public function __construct(EntityManagerInterface $em)
     {
-        $this->categories = [
-            new Category(new UuidType('0f5d4faa-d38e-4b61-b8d4-72b950d95382'), new NameType('Зеленый')),
-            new Category(new UuidType('0f5d4faa-d38e-4b61-b8d4-72b950d95381'), new NameType('Черный')),
-            new Category(new UuidType('0f5d4faa-d38e-4b61-b8d4-72b950d95380'), new NameType('Английский'))
-        ];
+        /** @var EntityRepository $repo */
+        $repo = $em->getRepository(Category::class);
+        $this->repo = $repo;
+        $this->em = $em;
     }
 
     public function getCategory(UuidType $id): Category
     {
-        foreach ($this->categories as $category) {
-            if ($category->getId()->isEqualTo($id)) {
-                return $category;
-            }
-        }
+        /** @var Category|null $category */
+        $category = $this->repo->find($id->getValue());
 
-        throw new InvalidArgumentException('Not found id');
+        return $this->fetch($category);
     }
 
-    /**
-     * @param NameType $name
-     * @return Category[]
-     */
-    public function findCategoryByName(NameType $name): array
+    public function findCategoryByName(string $name): array
     {
-        $categories = [];
+        $category = $this->repo->createQueryBuilder('t')
+            ->andWhere('LOWER (t.name) LIKE :name')
+            ->setParameter(':name', '%' . mb_strtolower($name) . '%')
+            ->getQuery()->getResult();
 
-        foreach ($this->categories as $category) {
-            if (mb_stripos($category->getName()->getValue(), $name->getValue()) !== false) {
-                $categories[] = $category;
-            }
-        }
-
-        if (!isset($categories)) {
-            throw new InvalidArgumentException('Not found name');
-        }
-
-        return $categories;
+        return $this->fetchAll($category);
     }
 
     /**
@@ -59,22 +46,48 @@ class CategoryRepository
      */
     public function getCategories(): array
     {
-        return $this->categories;
+        return $this->repo->findAll();
     }
 
     public function addCategory(Category $category): void
     {
-        $this->categories[] = $category;
+        $this->em->persist($category);
     }
 
-    public function has(Category $anotherCategory): bool
+    public function has(Category $category): bool
     {
-        foreach ($this->categories as $category) {
-            if ($category->getName()->isEqualTo($anotherCategory->getName())) {
-                return true;
-            }
+        return $this->repo->createQueryBuilder('t')
+                ->select('COUNT(t.id)')
+                ->andWhere('t.name = :name')
+                ->setParameter(':name', $category->getName()->getValue())
+                ->getQuery()->getSingleScalarResult() > 0;
+    }
+
+
+    private function fetch(?Category $category): Category
+    {
+        if (!$category) {
+            throw new InvalidArgumentException('Not found category.');
         }
 
-        return false;
+        return $category;
+    }
+
+    /**
+     * @param array $categories
+     * @return Category[]
+     */
+    private function fetchAll(array $categories): array
+    {
+        $allCategories = [];
+        foreach ($categories as $category) {
+            if (!$category) {
+                throw new InvalidArgumentException('Not found category.');
+            }
+
+            $allCategories[] = $category;
+        }
+
+        return $allCategories;
     }
 }

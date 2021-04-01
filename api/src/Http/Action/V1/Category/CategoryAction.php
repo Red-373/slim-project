@@ -26,8 +26,6 @@ class CategoryAction implements RequestHandlerInterface
 
         $id = $data['id'] ?? '';
 
-        //var_dump($data); die;
-
         $command = new Command();
         $command->id = $id;
         $command->validate();

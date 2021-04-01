@@ -13,11 +13,11 @@ class Command
     public function validate(): void
     {
         if (empty($this->name)) {
-            throw new InvalidArgumentException('Value name could not be empty');
+            throw new InvalidArgumentException('Value name could not be empty.');
         }
 
-        if (2 >= mb_strlen($this->name)) {
-            throw new InvalidArgumentException('Name have more 2 symbols');
+        if (mb_strlen($this->name) < 2) {
+            throw new InvalidArgumentException('The name must not be shorter than 2 characters.');
         }
     }
 }

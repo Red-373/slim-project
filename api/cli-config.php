@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Doctrine\ORM\EntityManagerInterface;
+/*use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Helper\DebugFormatterHelper;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Helper\QuestionHelper;
 require_once(__DIR__ . '/vendor/autoload.php');
 
 /** @var ContainerInterface $container */
-$container = require_once(__DIR__ . '/config/container.php');
+/*$container = require_once(__DIR__ . '/config/container.php');
 
 return new HelperSet([
     new FormatterHelper(),
@@ -21,4 +21,4 @@ return new HelperSet([
     new ProcessHelper(),
     new QuestionHelper(),
     'em' => new EntityManagerHelper($container->get(EntityManagerInterface::class))
-]);
+]);*/

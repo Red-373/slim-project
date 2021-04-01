@@ -6,11 +6,28 @@ namespace App\Model\Category\Entity;
 
 use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
+use Doctrine\ORM\Mapping as ORM;
 use LogicException;
 
+/**
+ * Class Category
+ * @package App\Model\Category\Entity
+ * @ORM\Entity
+ * @ORM\Table
+ */
 class Category
 {
+    /**
+     * @var UuidType
+     * @ORM\Column(type="uuid_type")
+     * @ORM\Id
+     */
     private UuidType $id;
+
+    /**
+     * @var NameType
+     * @ORM\Column(type="category_name_type", unique=true)
+     */
     private NameType $name;
 
     /**

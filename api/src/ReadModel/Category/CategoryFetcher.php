@@ -36,11 +36,15 @@ class CategoryFetcher
 
     public function findCategoryByName(FindCommand $command): array
     {
-        $categoryName = new NameType($command->name);
+        $categories = $this->repository->findCategoryByName($command->name);
 
-        $categories = $this->repository->findCategoryByName($categoryName);
+        $array = [];
 
-        return array_map([$this, 'convertCategoryToArray'], $categories);
+        foreach ($categories as $category) {
+            $array[] = $this->convertCategoryToArray($category);
+        }
+
+        return $array;
     }
 
     private function convertCategoryToArray(Category $category): array

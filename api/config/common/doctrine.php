@@ -2,8 +2,13 @@
 
 declare(strict_types=1);
 
+use App\Infrastructure\Doctrine\Type\Category\NameTypeDb;
+use App\Infrastructure\Doctrine\Type\UuidTypeDb;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\FilesystemCache;
+use Doctrine\Common\EventManager;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\UnderscoreNamingStrategy;
@@ -25,9 +30,24 @@ return [
 
         $config->setNamingStrategy(new UnderscoreNamingStrategy());
 
+        foreach ($settings['types'] as $name => $class) {
+            if (!Type::hasType($name)) {
+                Type::addType($name, $class);
+            }
+        }
+
+        $eventManager = new EventManager();
+
+        foreach ($settings['subscribers'] as $name) {
+            /** @var EventSubscriber $subscriber */
+            $subscriber = $container->get($name);
+            $eventManager->addEventSubscriber($subscriber);
+        }
+
         return EntityManager::create(
             $settings['connection'],
-            $config
+            $config,
+            $eventManager
         );
     },
 
@@ -38,10 +58,20 @@ return [
             'proxy_dir' => __DIR__ . '/../../var/cache/doctrine/proxy',
             'connection' => [
                 'driver' => 'pdo_pgsql',
-                'url' => getenv('DB_URL'),
+                'host' => getenv('DB_HOST'),
+                'user' => getenv('DB_USER'),
+                'password' => getenv('DB_PASSWORD'),
+                'dbname' => getenv('DB_NAME'),
                 'charset' => 'utf-8',
             ],
-            'metadata_dirs' => [],
+            'subscribers' => [],
+            'metadata_dirs' => [
+                __DIR__ . '/../../src/Model/Category/Entity'
+            ],
+            'types' => [
+                UuidTypeDb::NAME => UuidTypeDb::class,
+                NameTypeDb::NAME => NameTypeDb::class
+            ],
         ]
     ]
 ];

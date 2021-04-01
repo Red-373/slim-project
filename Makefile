@@ -17,10 +17,10 @@ api-cli:
 	docker-compose run --rm api-php-cli ${arg}
 
 php-cli:
-	docker-compose run --rm api-php-cli php cli.php ${args}
+	docker-compose run --rm api-php-cli php cli.php ${arg}
 
 console:
-	docker-compose run --rm api-php-cli php bin/app.php ${args}
+	docker-compose run --rm api-php-cli php bin/app.php ${arg}
 
 images-rm:
 	docker system prune -af
@@ -33,6 +33,3 @@ test:
 
 test-coverage:
 	docker-compose run --rm api-php-cli vendor/bin/phpunit --color=always --coverage-html var/coverage
-
-console:
-	docker-compose run --rm api-php-cli php bin/app.php
