@@ -7,17 +7,22 @@ use App\Http\Action\V1\Category\CategoryAction;
 use App\Http\Action\V1\Category\CategoryAddAction;
 use App\Http\Action\V1\Category\CategoryAllAction;
 use App\Http\Action\V1\Category\CategoryFindAction;
+use App\Http\Action\V1\Product\ProductAddAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
 return static function (App $app): void {
     $app->get('/', HomeAction::class);
-    $app->group('/v1', function (RouteCollectorProxy $group){
+    $app->group('/v1', function (RouteCollectorProxy $group) {
         $group->group('/categories', function (RouteCollectorProxy $group) {
             $group->get('', CategoryAction::class);
             $group->get('/all', CategoryAllAction::class);
             $group->get('/find', CategoryFindAction::class);
             $group->post('/add', CategoryAddAction::class);
+        });
+
+        $group->group('/products', function (RouteCollectorProxy $group) {
+            $group->post('/add', ProductAddAction::class);
         });
     });
 };

@@ -13,7 +13,7 @@ class Command
     public function validate(): void
     {
         if (empty($this->id)) {
-            throw new InvalidArgumentException('Value id could not be empty');
+            throw new InvalidArgumentException('Value id could not be empty.');
         }
     }
 }

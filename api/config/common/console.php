@@ -25,7 +25,7 @@ return [
         $configuration = new Configuration();
         $storageConfiguration = new TableMetadataStorageConfiguration();
 
-        $configuration->addMigrationsDirectory('App\Data\Migration',__DIR__ . '/../../src/Data/Migration');
+        $configuration->addMigrationsDirectory('App\Data\Migration', __DIR__ . '/../../src/Data/Migration');
         $configuration->setAllOrNothing(true);
         $configuration->setMetadataStorageConfiguration($storageConfiguration);
         $storageConfiguration->setTableName('migrations');

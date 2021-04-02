@@ -2,20 +2,24 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Type;
+namespace App\Model\Product\Type;
 
 use InvalidArgumentException;
-use Ramsey\Uuid\Uuid;
 
-class UuidType
+class NameType
 {
     private string $value;
 
     public function __construct(string $value)
     {
-        if (!Uuid::isValid($value)) {
-            throw new InvalidArgumentException('Value is not valid uuid.');
+        /*if (!preg_match('/^[a-zA-Zа-яА-Яа]+$/u', $value)) {
+            throw new InvalidArgumentException('The product name can have only letters and no have spaces.');
+        }*/
+
+        if (3 > mb_strlen($value)) {
+            throw new InvalidArgumentException('The product name cannot be less 3 symbols');
         }
+
         $this->value = $value;
     }
 
@@ -24,18 +28,8 @@ class UuidType
         return $this->value;
     }
 
-    public static function generate(): self
-    {
-        return new self(Uuid::uuid4()->toString());
-    }
-
     public function isEqualTo(self $another): bool
     {
         return $this->value === $another->getValue();
-    }
-
-    public function __toString(): string
-    {
-        return $this->getValue();
     }
 }

@@ -6,9 +6,9 @@ namespace App\ReadModel\Category;
 
 use App\Model\Category\Command\Category\Command;
 use App\Model\Category\Command\Find\Command as FindCommand;
+use App\Model\Product\Command\Add\Command as ProductAddCommand;
 use App\Model\Category\Entity\Category;
 use App\Model\Category\Entity\CategoryRepository;
-use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
 
 class CategoryFetcher
@@ -45,6 +45,13 @@ class CategoryFetcher
         }
 
         return $array;
+    }
+
+    public function findProductCategory(ProductAddCommand $command): Category
+    {
+        $categoryId = new UuidType($command->id);
+
+        return $this->repository->getCategory($categoryId);
     }
 
     private function convertCategoryToArray(Category $category): array

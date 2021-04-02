@@ -11,6 +11,6 @@ require_once(__DIR__ . '/../vendor/autoload.php');
 $container = require_once(__DIR__ . '/../config/container.php');
 
 /** @var App $app */
-$app = (require_once (__DIR__ . '/../config/app.php'))($container);
+$app = (require_once(__DIR__ . '/../config/app.php'))($container);
 
 $app->run();

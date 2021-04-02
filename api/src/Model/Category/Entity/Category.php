@@ -5,7 +5,10 @@ declare(strict_types=1);
 namespace App\Model\Category\Entity;
 
 use App\Model\Category\Type\NameType;
+use App\Model\Product\Entity\Product;
 use App\Model\Type\UuidType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use LogicException;
 
@@ -31,6 +34,12 @@ class Category
     private NameType $name;
 
     /**
+     * @var Collection
+     * @ORM\OneToMany(targetEntity="App\Model\Product\Entity\Product", mappedBy="category")
+     */
+    private Collection $products;
+
+    /**
      * Category constructor.
      * @param UuidType $id
      * @param NameType $name
@@ -39,6 +48,7 @@ class Category
     {
         $this->id = $id;
         $this->name = $name;
+        $this->products = new ArrayCollection();
     }
 
     /**
@@ -63,5 +73,13 @@ class Category
             throw new LogicException('Same name.');
         }
         $this->name = $anotherName;
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function getProducts(): array
+    {
+        return $this->products->toArray();
     }
 }

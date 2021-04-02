@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Http;
@@ -15,6 +16,6 @@ class JsonResponse extends Response
             $status,
             new Headers(['Content-Type' => 'application/json']),
             (new StreamFactory())->createStream(json_encode($data, JSON_THROW_ON_ERROR))
-    );
+        );
     }
 }

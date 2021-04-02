@@ -33,3 +33,12 @@ test:
 
 test-coverage:
 	docker-compose run --rm api-php-cli vendor/bin/phpunit --color=always --coverage-html var/coverage
+
+lint:
+	 docker-compose run --rm api-php-cli ./vendor/bin/phplint
+
+phpcs:
+	docker-compose run --rm api-php-cli ./vendor/bin/phpcs
+
+phpcbf:
+	docker-compose run --rm api-php-cli ./vendor/bin/phpcbf

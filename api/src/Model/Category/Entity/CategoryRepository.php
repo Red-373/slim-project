@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Entity;
 
-use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;

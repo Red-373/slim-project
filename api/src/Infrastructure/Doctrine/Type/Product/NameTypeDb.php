@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace App\Infrastructure\Doctrine\Type\Category;
+namespace App\Infrastructure\Doctrine\Type\Product;
 
-use App\Model\Category\Type\NameType;
+use App\Model\Product\Type\NameType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
 class NameTypeDb extends StringType
 {
-    public const NAME = 'category_name_type';
+    public const NAME = 'product_name_type';
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
