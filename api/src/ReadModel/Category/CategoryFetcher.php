@@ -48,9 +48,21 @@ class CategoryFetcher
 
     private function convertCategoryToArray(Category $category): array
     {
-        return [
+        $data = [
             'id' => $category->getId()->getValue(),
             'name' => $category->getName()->getValue(),
+            'products' => []
         ];
+
+        foreach ($category->getProducts() as $product) {
+            $data['products'][] = [
+                'name' => $product->getName()->getValue(),
+                'price' => $product->getPrice()->getValue(),
+                'description' => $product->getDescription()->getValue(),
+                'id' => $product->getId()->getValue(),
+            ];
+        }
+
+        return $data;
     }
 }

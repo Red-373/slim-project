@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<psalm
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="https://getpsalm.org/schema/config"
+        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+
+        name="Psalm for Psalm"
+        useDocblockTypes="true"
+        errorLevel="1"
+        strictBinaryOperands="false"
+        rememberPropertyAssignmentsAfterCall="true"
+        checkForThrowsDocblock="false"
+        throwExceptionOnError="0"
+        findUnusedCode="true"
+        ensureArrayStringOffsetsExist="true"
+        ensureArrayIntOffsetsExist="true"
+        resolveFromConfigFile="true"
+        limitMethodComplexity="true"
+        errorBaseline="psalm-baseline.xml"
+>
+    <projectFiles>
+        <directory name="src"/>
+        <directory name="bin"/>
+        <directory name="config"/>
+        <directory name="test"/>
+    </projectFiles>
+
+    <issueHandlers>
+        <LessSpecificReturnType errorLevel="info" />
+    </issueHandlers>
+</psalm>

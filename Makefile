@@ -1,3 +1,5 @@
+code-check: lint phpcs
+
 docker-up:
 	docker-compose up -d
 

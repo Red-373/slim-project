@@ -6,4 +6,5 @@ extensions:
 exclude:
   - vendor
   - var
+  - src/Data/Migration
 warning: false

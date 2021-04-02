@@ -69,13 +69,12 @@ class Product
      * @param Category $category
      */
     public function __construct(
-        UuidType $id,
         NameType $name,
         DescriptionType $description,
         PriceType $price,
         Category $category
     ) {
-        $this->id = $id;
+        $this->id = UuidType::generate();
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;

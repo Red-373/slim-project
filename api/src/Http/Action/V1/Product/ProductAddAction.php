@@ -25,7 +25,7 @@ class ProductAddAction implements RequestHandlerInterface
         $data = $request->getParsedBody();
 
         $command = new Command();
-        $command->id = $data['category_id'] ?? '';
+        $command->categoryId = $data['category_id'] ?? '';
         $command->name = $data['name'] ?? '';
         $command->price = (float) $data['price'] ?? '';
         $command->description = $data['description'] ?? '';

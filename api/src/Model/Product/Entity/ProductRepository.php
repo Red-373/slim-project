@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Entity;
 
+use App\Model\Product\Type\NameType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -20,12 +21,12 @@ class ProductRepository
         $this->em = $em;
     }
 
-    public function has(Product $product): bool
+    public function hasProductByName(NameType $name): bool
     {
         return $this->repo->createQueryBuilder('t')
                 ->select('COUNT(t.id)')
                 ->andWhere('t.name = :name')
-                ->setParameter(':name', $product->getName()->getValue())
+                ->setParameter(':name', $name->getValue())
                 ->getQuery()->getSingleScalarResult() > 0;
     }
 
