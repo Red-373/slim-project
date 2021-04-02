@@ -15,7 +15,7 @@ class CategoryActionTest extends WebTestCase
         $this->loadFixtures([CategoryFixture::class]);
     }
 
-    /*public function testSuccess()
+    public function testSuccess()
     {
         $id = CategoryFixture::$CATEGORY->getId()->getValue();
         $name = CategoryFixture::$CATEGORY->getName()->getValue();
@@ -28,7 +28,7 @@ class CategoryActionTest extends WebTestCase
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals($name, $data['name']);
         self::assertEquals($id, $data['id']);
-    }*/
+    }
 
     /*public function testEmptyId()
     {

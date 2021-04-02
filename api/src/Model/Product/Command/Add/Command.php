@@ -12,7 +12,6 @@ class Command
     public string $name;
     public string $description;
     public float $price;
-    public Category $category;
     public string $id;
 
     public function validate()

@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Category\Type\Test;
 
 use App\Model\Category\Type\NameType;
-use App\Model\Type\UuidType;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Ramsey\Uuid\Uuid;
-use SebastianBergmann\CodeCoverage\Report\PHP;
-use Throwable;
 
 class NameTypeTest extends TestCase
 {

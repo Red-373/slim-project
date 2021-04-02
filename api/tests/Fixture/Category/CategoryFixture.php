@@ -16,12 +16,12 @@ class CategoryFixture extends AbstractFixture
 
     public function load(ObjectManager $manager)
     {
-        self::$CATEGORY = $category = new Category(
+        self::$CATEGORY = new Category(
             new UuidType((string)UuidType::generate()),
             new NameType('Smartphone'),
         );
 
-        $manager->persist($category);
+        $manager->persist(self::$CATEGORY);
 
         $manager->flush();
     }
