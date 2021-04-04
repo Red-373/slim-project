@@ -6,6 +6,7 @@ use App\Console\FixtureLoadCommand;
 use Doctrine\Migrations\DependencyFactory;
 use Doctrine\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\Migrations\Tools\Console\Command\GenerateCommand;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Console\Command\SchemaTool\CreateCommand;
 use Doctrine\ORM\Tools\Console\Command\SchemaTool\DropCommand;
 use Psr\Container\ContainerInterface;
@@ -17,7 +18,7 @@ return [
     FixtureLoadCommand::class => static function (ContainerInterface $container): FixtureLoadCommand {
         $config = $container->get('config')['console'];
 
-        $em = $container->get(\Doctrine\ORM\EntityManagerInterface::class);
+        $em = $container->get(EntityManagerInterface::class);
 
         return new FixtureLoadCommand(
             $em,

@@ -4,6 +4,7 @@
 declare(strict_types=1);
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Console\Application;
 
@@ -18,7 +19,7 @@ $commands = $container->get('config')['console']['commands'];
 
 /** @var EntityManagerInterface $entityManager */
 $entityManager = $container->get(EntityManagerInterface::class);
-$cli->getHelperSet()->set(new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($entityManager), 'em');
+$cli->getHelperSet()->set(new EntityManagerHelper($entityManager), 'em');
 
 //ConsoleRunner::addCommands($cli);
 
