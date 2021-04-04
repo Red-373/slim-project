@@ -22,7 +22,7 @@ class CategoryFindAction implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $data = $request->getQueryParams();
+        $data = $request->getParsedBody();
 
         $name = $data['name'] ?? '';
 
