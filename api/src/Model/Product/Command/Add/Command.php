@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Command\Add;
 
-use App\Model\Category\Entity\Category;
 use InvalidArgumentException;
 
 class Command
