@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Model\Category\Type\Test;
 
 use App\Model\Category\Type\NameType;
-use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Webmozart\Assert\InvalidArgumentException;
 
 class NameTypeTest extends TestCase
 {
@@ -39,7 +39,7 @@ class NameTypeTest extends TestCase
         try {
             new NameType('on');
         } catch (InvalidArgumentException $e) {
-            self::assertTrue($e->getMessage() === 'The name cannot be less 3 symbols');
+            self::assertTrue($e->getMessage() === 'The name cannot be less 3 symbols.');
         }
     }
 
