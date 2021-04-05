@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Type;
 
-use InvalidArgumentException;
+use Webmozart\Assert\Assert;
 
 class DescriptionType
 {
@@ -12,9 +12,7 @@ class DescriptionType
 
     public function __construct(string $value)
     {
-        if (3 > mb_strlen($value)) {
-            throw new InvalidArgumentException('The description cannot be less 3 symbols');
-        }
+        Assert::minLength($value, 3, 'The description cannot be less 3 symbols.');
 
         $this->value = $value;
     }

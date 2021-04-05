@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Category\Command\Update;
 
 use App\Infrastructure\Doctrine\Flusher\Flusher;
+use App\Model\Category\Entity\Category;
 use App\Model\Category\Entity\CategoryRepository;
 use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
@@ -23,13 +24,13 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $categoryId = $command->id;
+        $categoryId = new UuidType($command->id);
 
-        $category = $this->repository->getCategory(new UuidType($categoryId));
-
-        if (!$category) {
-            throw new DomainException('No found category for id' . $categoryId);
+        if (!$this->repository->has($categoryId)) {
+            throw new DomainException('Not found category for id = ' . $categoryId->getValue() . '.');
         }
+
+        $category = $this->repository->getCategory($categoryId);
 
         $category->changeName(new NameType($command->name));
 

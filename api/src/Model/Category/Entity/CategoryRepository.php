@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Entity;
 
+use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use DomainException;
 use InvalidArgumentException;
 
 class CategoryRepository
@@ -51,12 +53,21 @@ class CategoryRepository
         $this->em->persist($category);
     }
 
-    public function has(Category $category): bool
+    public function has(UuidType $id): bool
+    {
+        return $this->repo->createQueryBuilder('t')
+                ->select('COUNT(t.id)')
+                ->andWhere('t.id = :id')
+                ->setParameter(':id', $id->getValue())
+                ->getQuery()->getSingleScalarResult() > 0;
+    }
+
+    public function hasByName(NameType $name): bool
     {
         return $this->repo->createQueryBuilder('t')
                 ->select('COUNT(t.id)')
                 ->andWhere('t.name = :name')
-                ->setParameter(':name', $category->getName()->getValue())
+                ->setParameter(':name', $name->getValue())
                 ->getQuery()->getSingleScalarResult() > 0;
     }
 
@@ -64,7 +75,7 @@ class CategoryRepository
     private function fetch(?Category $category): Category
     {
         if (!$category) {
-            throw new InvalidArgumentException('Not found category.');
+            throw new DomainException('Not found category.' );
         }
 
         return $category;
