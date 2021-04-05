@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Type\Test;
 
+use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -20,11 +21,19 @@ class UuidTypeTest extends TestCase
         self::assertEquals($value, $uuidType->getValue());
     }
 
-    public function testFail(): void
+    public function testExceptionMessage(): void
+    {
+        try {
+            new UuidType('123');
+        } catch (InvalidArgumentException $e) {
+            self::assertTrue($e->getMessage() === 'Value is not valid uuid.');
+        }
+    }
+
+    public function testException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Value is not valid uuid.');
-        new UuidType('str');
+        new NameType('123');
     }
 
     public function testIsEqualTo(): void

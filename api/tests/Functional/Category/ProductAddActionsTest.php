@@ -17,14 +17,14 @@ class ProductAddActionsTest extends WebTestCase
 
     public function testSuccess()
     {
-        $id = CategoryFixture::$CATEGORY->getId()->getValue();
+        $id = CategoryFixture::CORRECT_UUID;
 
         $request = self::json('POST', '/v1/products/add');
 
         $body = [
             'category_id' => $id,
             'name' => 'Nokia C3',
-            'price' => 199.99,
+            'price' => 199,
             'description' => 'Lalalalala lalal alal',
         ];
 
@@ -39,16 +39,16 @@ class ProductAddActionsTest extends WebTestCase
         self::assertEquals([], $data);
     }
 
-    public function testFail()
+    public function testFailNotFoundCategory()
     {
-        $id = CategoryFixture::$CATEGORY->getId()->getValue() . 's';
+        $id = CategoryFixture::UNDEFINED_UUID;
 
         $request = self::json('POST', '/v1/products/add');
 
         $body = [
             'category_id' => $id,
             'name' => 'Nokia C3',
-            'price' => 199.99,
+            'price' => 199,
             'description' => 'Lalalalala lalal alal',
         ];
 
@@ -58,7 +58,31 @@ class ProductAddActionsTest extends WebTestCase
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertTrue($data['exception'][0]['type'] === 'InvalidArgumentException');
-        self::assertTrue($data['exception'][0]['message'] === 'Value is not valid uuid.');
+        self::assertTrue($data['exception'][0]['message'] === 'Not found category.');
         self::assertEquals(500, $response->getStatusCode());
+    }
+
+    public function testFailIncorrectValues()
+    {
+        $id = CategoryFixture::INCORRECT_UUID;
+
+        $request = self::json('POST', '/v1/products/add');
+
+        $body = [
+            'category_id' => $id,
+            'name' => '',
+            'price' => '',
+            'description' => '',
+        ];
+
+        $request = $request->withParsedBody($body);
+        $response = $this->app()->handle($request);
+
+        $data = json_decode((string)$response->getBody(), true);
+
+        self::assertTrue($data['errors']['categoryId'] === 'This is not a valid UUID.');
+        self::assertTrue($data['errors']['name'] === 'This value is too short. It should have 3 characters or more.');
+        self::assertTrue($data['errors']['description'] === 'This value is too short. It should have 3 characters or more.');
+        self::assertTrue($data['errors']['price'] === 'This value should be positive.');
     }
 }

@@ -21,7 +21,6 @@ class ProductFixtures extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         self::$PRODUCT = new Product(
-            new UuidType((string)UuidType::generate()),
             new NameType('Iphone 13'),
             new DescriptionType('Lala la la'),
             new PriceType(2.20),

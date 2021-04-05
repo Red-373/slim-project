@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Model\Type;
 
-use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
+use Webmozart\Assert\Assert;
 
 class UuidType
 {
@@ -13,9 +13,7 @@ class UuidType
 
     public function __construct(string $value)
     {
-        if (!Uuid::isValid($value)) {
-            throw new InvalidArgumentException('Value is not valid uuid.');
-        }
+        Assert::uuid($value,'Value is not valid uuid.');
         $this->value = $value;
     }
 
