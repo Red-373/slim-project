@@ -7,6 +7,7 @@ use App\Http\Action\V1\Category\CategoryAction;
 use App\Http\Action\V1\Category\CategoryAddAction;
 use App\Http\Action\V1\Category\CategoryAllAction;
 use App\Http\Action\V1\Category\CategoryFindAction;
+use App\Http\Action\V1\Category\CategoryUpdateAction;
 use App\Http\Action\V1\Product\ProductAddAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -19,6 +20,7 @@ return static function (App $app): void {
             $group->get('/all', CategoryAllAction::class);
             $group->get('/find', CategoryFindAction::class);
             $group->post('/add', CategoryAddAction::class);
+            $group->put('/update', CategoryUpdateAction::class);
         });
 
         $group->group('/products', function (RouteCollectorProxy $group) {

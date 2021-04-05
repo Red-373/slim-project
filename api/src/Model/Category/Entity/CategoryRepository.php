@@ -14,10 +14,8 @@ class CategoryRepository
     private EntityManagerInterface $em;
     private EntityRepository $repo;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, EntityRepository $repo)
     {
-        /** @var EntityRepository $repo */
-        $repo = $em->getRepository(Category::class);
         $this->repo = $repo;
         $this->em = $em;
     }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Catcher;
 
 use App\Http\JsonResponse;
 use App\Http\Validator\ValidationException;

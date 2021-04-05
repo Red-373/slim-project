@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Http\Action\V1\Category;
 
-use App\Infrastructure\Exception\TypeErrorException;
 use App\Http\JsonResponse;
-use App\Model\Category\Command\Add\Command;
-use App\Model\Category\Command\Add\Handler;
+use App\Infrastructure\Exception\TypeErrorException;
+use App\Model\Category\Command\Update\Command;
+use App\Model\Category\Command\Update\Handler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TypeError;
 
-class CategoryAddAction implements RequestHandlerInterface
+class CategoryUpdateAction implements RequestHandlerInterface
 {
     private Handler $handler;
     private ValidatorInterface $validator;
@@ -29,12 +29,11 @@ class CategoryAddAction implements RequestHandlerInterface
     {
         $data = $request->getParsedBody();
 
-        $name = $data['name'] ?? '';
-
         $command = new Command();
 
         try {
-            $command->name = $name;
+            $command->name = $data['name'] ?? '';
+            $command->id = $data['id'] ?? '';
         } catch (TypeError $e) {
             throw new TypeErrorException($e->getMessage(), $e->getCode(), $e);
         }

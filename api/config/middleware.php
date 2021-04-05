@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\ClearEmptyInputMiddleware;
-use App\Http\Middleware\DomainExceptionHandlerMiddleware;
-use App\Http\Middleware\TypeErrorMiddleware;
-use App\Http\Middleware\ValidationExceptionMiddleware;
+use App\Http\Middleware\Catcher\DomainExceptionHandlerMiddleware;
+use App\Http\Middleware\Catcher\TypeErrorMiddleware;
+use App\Http\Middleware\Catcher\ValidationExceptionMiddleware;
 use Slim\App;
 use Slim\Middleware\ErrorMiddleware;
 

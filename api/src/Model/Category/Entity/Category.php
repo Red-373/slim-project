@@ -69,7 +69,7 @@ class Category
 
     public function changeName(NameType $anotherName): void
     {
-        if (!$this->name->isEqualTo($anotherName)) {
+        if ($this->name->isEqualTo($anotherName)) {
             throw new LogicException('Same name.');
         }
         $this->name = $anotherName;

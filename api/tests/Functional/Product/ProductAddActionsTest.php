@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Test\Functional\Category;
+namespace Test\Functional\Product;
 
 use Test\Fixture\Category\CategoryFixture;
 use Test\Functional\WebTestCase;
@@ -71,7 +71,7 @@ class ProductAddActionsTest extends WebTestCase
         $body = [
             'category_id' => $id,
             'name' => '',
-            'price' => '',
+            'price' => -2.5,
             'description' => '',
         ];
 
