@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Command\Add;
 
-use InvalidArgumentException;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
@@ -25,6 +24,7 @@ class Command
     /**
      * @Assert\NotBlank()
      * @Assert\Positive()
+     * @Assert\Type("float")
      */
     public float $price;
 

@@ -30,7 +30,7 @@ class ProductAddAction implements RequestHandlerInterface
         $command = new Command();
         $command->categoryId = $data['category_id'] ?? '';
         $command->name = $data['name'] ?? '';
-        $command->price = (float)$data['price'] ?? '';
+        $command->price = $data['price'] ?? '';
         $command->description = $data['description'] ?? '';
 
         $this->validator->validate($command);

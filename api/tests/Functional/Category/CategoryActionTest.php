@@ -15,7 +15,7 @@ class CategoryActionTest extends WebTestCase
         $this->loadFixtures([CategoryFixture::class]);
     }
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
         $id = CategoryFixture::$CATEGORY->getId()->getValue();
         $name = CategoryFixture::$CATEGORY->getName()->getValue();
@@ -30,7 +30,7 @@ class CategoryActionTest extends WebTestCase
         self::assertEquals($id, $data['id']);
     }
 
-    /*public function testEmptyId()
+    /*public function testEmptyId(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
@@ -46,7 +46,7 @@ class CategoryActionTest extends WebTestCase
         }
     }
 
-    public function testIncorrectId()
+    public function testIncorrectId(): void
     {
         $id = 'inccorect2id';
 

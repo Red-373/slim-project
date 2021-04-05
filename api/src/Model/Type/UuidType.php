@@ -13,7 +13,7 @@ class UuidType
 
     public function __construct(string $value)
     {
-        Assert::uuid($value,'Value is not valid uuid.');
+        Assert::uuid($value, 'Value is not valid uuid.');
         $this->value = $value;
     }
 
