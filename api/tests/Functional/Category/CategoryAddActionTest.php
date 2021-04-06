@@ -33,7 +33,7 @@ class CategoryAddActionTest extends WebTestCase
         self::assertEquals([], $data);
     }
 
-    public function testCategoryAlreadySet(): void
+    public function testFailCategoryAlreadySet(): void
     {
         $request = self::json('POST', '/v1/categories/add');
 

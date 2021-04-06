@@ -132,4 +132,6 @@ class CategoryUpdateActionTest extends WebTestCase
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($error, $data);
     }
+
+    // TODO: Make test for Category Not found Exc
 }

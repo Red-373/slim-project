@@ -6,7 +6,6 @@ namespace Test\Functional\Category;
 
 use Test\Fixture\Category\CategoryFixture;
 use Test\Functional\WebTestCase;
-use Webmozart\Assert\InvalidArgumentException;
 
 class CategoryActionTest extends WebTestCase
 {
@@ -30,7 +29,7 @@ class CategoryActionTest extends WebTestCase
         self::assertEquals($id, $data['id']);
     }
 
-    public function testEmptyId(): void
+    public function testFailEmptyId(): void
     {
         $response = $this->app()->handle(self::json('GET', '/v1/categories?id='));
 
@@ -45,7 +44,7 @@ class CategoryActionTest extends WebTestCase
         self::assertEquals($errors, $data);
     }
 
-    public function testIncorrectId(): void
+    public function testFailIncorrectId(): void
     {
         $response = $this->app()->handle(self::json('GET', '/v1/categories?id=IncorrectId'));
 

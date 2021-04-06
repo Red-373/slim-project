@@ -6,6 +6,7 @@ use App\Http\Action\HomeAction;
 use App\Http\Action\V1\Category\CategoryAction;
 use App\Http\Action\V1\Category\CategoryAddAction;
 use App\Http\Action\V1\Category\CategoryAllAction;
+use App\Http\Action\V1\Category\CategoryAttachProductAction;
 use App\Http\Action\V1\Category\CategoryFindAction;
 use App\Http\Action\V1\Category\CategoryUpdateAction;
 use App\Http\Action\V1\Product\ProductAddAction;
@@ -21,6 +22,7 @@ return static function (App $app): void {
             $group->get('/find', CategoryFindAction::class);
             $group->post('/add', CategoryAddAction::class);
             $group->put('/update', CategoryUpdateAction::class);
+            $group->post('/attach/products', CategoryAttachProductAction::class);
         });
 
         $group->group('/products', function (RouteCollectorProxy $group) {

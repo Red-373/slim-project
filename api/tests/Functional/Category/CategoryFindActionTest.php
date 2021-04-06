@@ -35,7 +35,7 @@ class CategoryFindActionTest extends WebTestCase
         self::assertEquals($category, $data);
     }
 
-    public function testUndefinedName(): void
+    public function testFailUndefinedName(): void
     {
         $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=notfound'));
 
@@ -44,7 +44,7 @@ class CategoryFindActionTest extends WebTestCase
         self::assertEquals([], $data);
     }
 
-    public function testEmptyName(): void
+    public function testFailEmptyName(): void
     {
         $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name='));
 
