@@ -28,12 +28,11 @@ class Command
      */
     public float $price;
 
-
-    public string $categoryId;
+    public ?string $categoryId;
 
     public static function loadValidatorMetadata(ClassMetadata $metadata)
     {
-        $metadata->addPropertyConstraint('categoryId', new Assert\NotBlank());
+        //$metadata->addPropertyConstraint('categoryId', new Assert\NotBlank());
         $metadata->addPropertyConstraint('categoryId', new Assert\Uuid());
     }
 

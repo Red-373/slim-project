@@ -36,7 +36,12 @@ class Category
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="App\Model\Product\Entity\Product", mappedBy="category")
+     * @ORM\OneToMany(
+     *     targetEntity="App\Model\Product\Entity\Product",
+     *     mappedBy="category",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     * )
      */
     private Collection $products;
 
@@ -82,5 +87,10 @@ class Category
     public function getProducts(): array
     {
         return $this->products->toArray();
+    }
+
+    public function addProduct(Product $products): void
+    {
+        $this->products->add($products);
     }
 }

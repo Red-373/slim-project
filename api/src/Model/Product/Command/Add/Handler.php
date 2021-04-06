@@ -29,10 +29,20 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $productName = new NameType($command->name);
-        $description = new DescriptionType($command->description);
-        $price =  new PriceType($command->price);
-        $category = $this->categoryRepository->getCategory(new UuidType($command->categoryId));
+        $name = $command->name;
+        $description = $command->description;
+        $price = $command->price;
+
+        $productName = new NameType($name);
+        $productDescription = new DescriptionType($description);
+        $productPrice = new PriceType($price);
+        $categoryId = !empty($command->categoryId) ? new UuidType($command->categoryId) : null;
+
+        $category = null;
+
+        if ($categoryId) {
+            $category = $this->categoryRepository->getCategory($categoryId);
+        }
 
         if ($this->repository->hasProductByName($productName)) {
             throw new LogicException('Product already set!');
@@ -40,8 +50,8 @@ class Handler
 
         $product = new Product(
             $productName,
-            $description,
-            $price,
+            $productDescription,
+            $productPrice,
             $category
         );
 

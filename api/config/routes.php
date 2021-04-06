@@ -9,6 +9,7 @@ use App\Http\Action\V1\Category\CategoryAllAction;
 use App\Http\Action\V1\Category\CategoryAttachProductAction;
 use App\Http\Action\V1\Category\CategoryFindAction;
 use App\Http\Action\V1\Category\CategoryUpdateAction;
+use App\Http\Action\V1\Product\ProductAction;
 use App\Http\Action\V1\Product\ProductAddAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
@@ -27,6 +28,7 @@ return static function (App $app): void {
 
         $group->group('/products', function (RouteCollectorProxy $group) {
             $group->post('/add', ProductAddAction::class);
+            $group->get('', ProductAction::class);
         });
     });
 };

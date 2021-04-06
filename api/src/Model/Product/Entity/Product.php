@@ -60,20 +60,13 @@ class Product
      */
     private ?Category $category;
 
-    /**
-     * Product constructor.
-     * @param UuidType $id
-     * @param NameType $name
-     * @param DescriptionType $description
-     * @param PriceType $price
-     * @param Category $category
-     */
     public function __construct(
         NameType $name,
         DescriptionType $description,
         PriceType $price,
         ?Category $category = null
-    ) {
+    )
+    {
         $this->id = UuidType::generate();
         $this->name = $name;
         $this->description = $description;
@@ -119,5 +112,22 @@ class Product
             throw new LogicException('Same name.');
         }
         $this->name = $anotherName;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function hasCategory(self $product): bool
+    {
+        if ($product->category) {
+            return true;
+        }
+
+        return false;
     }
 }

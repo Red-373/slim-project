@@ -14,7 +14,7 @@ class UuidTypeDb extends GuidType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        return $value instanceof UuidType ? $value->getValue() : $value;
+        return $value instanceof UuidType ? $value->getValue() : (!empty($value) ? (string)$value : null);
     }
 
     public function convertToPHPValue($value, AbstractPlatform $platform): ?UuidType

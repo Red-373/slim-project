@@ -39,7 +39,7 @@ class FixtureLoadCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $output->writeln('<comment>Loading fuxtyres</comment>');
+        $output->writeln('<comment>Loading fixtures</comment>');
 
         $loader = new Loader();
 
