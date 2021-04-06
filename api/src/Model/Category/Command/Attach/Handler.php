@@ -46,8 +46,7 @@ class Handler
                 throw new DomainException('This product have category id.');
             }
 
-            $category->addProduct($product);
-            // TODO: Not save products
+            $product->setCategory($category);
         }
 
         $this->flusher->flush();

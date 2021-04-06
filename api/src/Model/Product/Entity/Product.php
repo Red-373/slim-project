@@ -130,4 +130,11 @@ class Product
 
         return false;
     }
+
+    public function setCategory(Category $category): Product
+    {
+        $this->category = $category;
+
+        return $this;
+    }
 }

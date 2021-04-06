@@ -11,7 +11,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use DomainException;
-use LogicException;
 
 /**
  * Class Category
@@ -36,12 +35,7 @@ class Category
 
     /**
      * @var Collection
-     * @ORM\OneToMany(
-     *     targetEntity="App\Model\Product\Entity\Product",
-     *     mappedBy="category",
-     *     orphanRemoval=true,
-     *     cascade={"persist"}
-     * )
+     * @ORM\OneToMany(targetEntity="App\Model\Product\Entity\Product", mappedBy="category", cascade={"persist"})
      */
     private Collection $products;
 
