@@ -45,7 +45,8 @@ class Handler
             if ($product->hasCategory($product)) {
                 throw new DomainException('This product have category id.');
             }
-
+            // Зависимая сторона Mappedby (mapped by category(сопоставлено по категориям))
+            // Сторона владелец inversedBy (inversed by product(перевернутый по продукту))
             $product->setCategory($category);
         }
 

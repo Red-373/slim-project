@@ -55,7 +55,7 @@ class Product
 
     /**
      * @var ?Category
-     * @ORM\ManyToOne(targetEntity="App\Model\Category\Entity\Category", inversedBy="product", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Model\Category\Entity\Category", inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private ?Category $category;
