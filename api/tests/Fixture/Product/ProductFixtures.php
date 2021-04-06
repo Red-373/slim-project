@@ -17,6 +17,7 @@ use App\Model\Category\Type\NameType as CategoryName;
 class ProductFixtures extends AbstractFixture
 {
     public static Product $PRODUCT;
+    public static Product $SECOND_PRODUCT;
 
     public function load(ObjectManager $manager)
     {
@@ -28,6 +29,14 @@ class ProductFixtures extends AbstractFixture
         );
 
         $manager->persist(self::$PRODUCT);
+
+        self::$SECOND_PRODUCT = new Product(
+            new NameType('Nokia'),
+            new DescriptionType('Lala la la'),
+            new PriceType(2.99)
+        );
+
+        $manager->persist(self::$SECOND_PRODUCT);
 
         $manager->flush();
     }

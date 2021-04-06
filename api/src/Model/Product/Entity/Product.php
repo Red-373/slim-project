@@ -54,11 +54,11 @@ class Product
      */
 
     /**
-     * @var Category
-     * @ORM\ManyToOne(targetEntity="App\Model\Category\Entity\Category", inversedBy="product")
+     * @var ?Category
+     * @ORM\ManyToOne(targetEntity="App\Model\Category\Entity\Category", inversedBy="product", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
-    private Category $category;
+    private ?Category $category;
 
     /**
      * Product constructor.
@@ -72,7 +72,7 @@ class Product
         NameType $name,
         DescriptionType $description,
         PriceType $price,
-        Category $category
+        ?Category $category = null
     ) {
         $this->id = UuidType::generate();
         $this->name = $name;

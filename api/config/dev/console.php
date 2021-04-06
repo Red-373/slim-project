@@ -37,7 +37,7 @@ return [
                 GenerateCommand::class
             ],
             'fixture_paths' => [
-                __DIR__ . '/../../tests/Fixture'
+                __DIR__ . '/../../tests/Fixture/Product'
             ]
         ],
     ],
