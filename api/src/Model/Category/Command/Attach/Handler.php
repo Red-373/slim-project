@@ -47,6 +47,7 @@ class Handler
             }
 
             $category->addProduct($product);
+            // TODO: Not save products
         }
 
         $this->flusher->flush();
