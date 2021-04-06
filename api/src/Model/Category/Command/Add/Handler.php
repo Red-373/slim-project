@@ -9,6 +9,7 @@ use App\Model\Category\Entity\Category;
 use App\Model\Category\Entity\CategoryRepository;
 use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
+use DomainException;
 use LogicException;
 
 class Handler
@@ -26,8 +27,8 @@ class Handler
     {
         $category = new Category(UuidType::generate(), new NameType($command->name));
 
-        if ($this->repository->has($category)) {
-            throw new LogicException('Category already set!');
+        if ($this->repository->hasByName($category->getName())) {
+            throw new DomainException('Category already set!');
         }
 
         $this->repository->addCategory($category);

@@ -12,7 +12,7 @@ class Command
      * @Assert\NotBlank
      * @Assert\Type("string")
      * @Assert\Length(min=3)
-     * @Assert\Regex('/^[a-zA-Zа-яА-Яа]+$/u')
+     * @Assert\Regex("/^[a-zA-Zа-яА-Яа]+$/u", message = "The name cannot contain numbers.")
      */
     public string $name;
 

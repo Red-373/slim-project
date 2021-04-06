@@ -10,6 +10,7 @@ use App\Model\Type\UuidType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use DomainException;
 use LogicException;
 
 /**
@@ -70,7 +71,7 @@ class Category
     public function changeName(NameType $anotherName): void
     {
         if ($this->name->isEqualTo($anotherName)) {
-            throw new LogicException('Same name.');
+            throw new DomainException('Same name.');
         }
         $this->name = $anotherName;
     }

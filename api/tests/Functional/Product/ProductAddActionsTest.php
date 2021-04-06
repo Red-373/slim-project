@@ -17,13 +17,13 @@ class ProductAddActionsTest extends WebTestCase
 
     public function testSuccess()
     {
-        $id = CategoryFixture::CORRECT_UUID;
+        $id = CategoryFixture::$CATEGORY->getId()->getValue();
 
         $request = self::json('POST', '/v1/products/add');
 
         $body = [
             'category_id' => $id,
-            'name' => 'Nokia C3',
+            'name' => 'Nokia',
             'price' => 199,
             'description' => 'Lalalalala lalal alal',
         ];
@@ -41,13 +41,13 @@ class ProductAddActionsTest extends WebTestCase
 
     public function testFailNotFoundCategory()
     {
-        $id = CategoryFixture::UNDEFINED_UUID;
+        $id = 'b4eb097b-1b32-4121-bccb-41bdbb240492';
 
         $request = self::json('POST', '/v1/products/add');
 
         $body = [
             'category_id' => $id,
-            'name' => 'Nokia C3',
+            'name' => 'Nokia',
             'price' => 199,
             'description' => 'Lalalalala lalal alal',
         ];
@@ -57,14 +57,13 @@ class ProductAddActionsTest extends WebTestCase
 
         $data = json_decode((string)$response->getBody(), true);
 
-        self::assertTrue($data['exception'][0]['type'] === 'InvalidArgumentException');
-        self::assertTrue($data['exception'][0]['message'] === 'Not found category.');
-        self::assertEquals(500, $response->getStatusCode());
+        self::assertTrue($data['message'] === 'Not found category.');
+        self::assertEquals(409, $response->getStatusCode());
     }
 
     public function testFailIncorrectValues()
     {
-        $id = CategoryFixture::INCORRECT_UUID;
+        $id = 'a0cd6990-10bf-43cd-a5f6-c037c4b969eeE';
 
         $request = self::json('POST', '/v1/products/add');
 

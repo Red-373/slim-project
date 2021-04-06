@@ -16,6 +16,7 @@ class Command
 
     /**
      * @Assert\NotBlank
+     * @Assert\Length(min=3)
      */
     public string $name;
 }

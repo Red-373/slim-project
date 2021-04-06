@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Action\V1\Category;
 
 use App\Http\JsonResponse;
+use App\Http\Validator\Validator;
 use App\Infrastructure\Exception\TypeErrorException;
 use App\Model\Category\Command\Update\Command;
 use App\Model\Category\Command\Update\Handler;
@@ -17,9 +18,9 @@ use TypeError;
 class CategoryUpdateAction implements RequestHandlerInterface
 {
     private Handler $handler;
-    private ValidatorInterface $validator;
+    private Validator$validator;
 
-    public function __construct(Handler $handler, ValidatorInterface $validator)
+    public function __construct(Handler $handler, Validator $validator)
     {
         $this->handler = $handler;
         $this->validator = $validator;

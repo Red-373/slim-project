@@ -6,6 +6,7 @@ namespace Test\Functional\Category;
 
 use Test\Fixture\Category\CategoryFixture;
 use Test\Functional\WebTestCase;
+use Webmozart\Assert\InvalidArgumentException;
 
 class CategoryActionTest extends WebTestCase
 {
@@ -24,49 +25,38 @@ class CategoryActionTest extends WebTestCase
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals($name, $data['name']);
         self::assertEquals($id, $data['id']);
     }
 
-    /*public function testEmptyId(): void
+    public function testEmptyId(): void
     {
-        $this->expectException(InvalidArgumentException::class);
-
         $response = $this->app()->handle(self::json('GET', '/v1/categories?id='));
-    }
 
-    public function testEmptyIdMessage(): void
-    {
-        try {
-            $response = $this->app()->handle(self::json('GET', '/v1/categories?id='));
-        } catch (InvalidArgumentException $e) {
-            self::assertTrue($e->getMessage() === 'Value id could not be empty.');
-        }
+        $data = json_decode($response->getBody()->getContents(), true);
+
+        $errors = [
+            'errors' => [
+                'id' => 'This value should not be blank.'
+            ]
+        ];
+
+        self::assertEquals($errors, $data);
     }
 
     public function testIncorrectId(): void
     {
-        $id = 'inccorect2id';
+        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=IncorrectId'));
 
-        //$this->expectException(InvalidArgumentException::class);
+        $data = json_decode($response->getBody()->getContents(), true);
 
-        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=' . $id));
+        $errors = [
+            'errors' => [
+                'id' => 'This is not a valid UUID.'
+            ]
+        ];
 
-        self::assertEquals(500, $response->getStatusCode());
-
-        var_dump((string) $response->getBody());
-        die;
+        self::assertEquals($errors, $data);
     }
-
-    public function testIncorrectIdMessage(): void
-    {
-        try {
-            $id = 'inccorect2id';
-            $this->app()->handle(self::json('GET', '/v1/categories?id=' . $id));
-        } catch (Throwable $e) {
-            self::assertTrue($e->getMessage() === 'Value is not valid uuid.');
-        }
-    }*/
 }

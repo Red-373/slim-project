@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Command\Category;
 
-use InvalidArgumentException;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Command
 {
+    /**
+     * @Assert\NotBlank
+     * @Assert\Uuid
+     */
     public string $id;
-
-    public function validate(): void
-    {
-        if (empty($this->id)) {
-            throw new InvalidArgumentException('Value id could not be empty.');
-        }
-    }
 }

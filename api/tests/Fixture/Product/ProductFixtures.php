@@ -13,7 +13,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 use Test\Fixture\Category\CategoryFixture;
 
-class ProductFixtures extends AbstractFixture
+/*class ProductFixtures extends AbstractFixture
 {
     public static Product $PRODUCT;
 
@@ -21,7 +21,7 @@ class ProductFixtures extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         self::$PRODUCT = new Product(
-            new NameType('Iphone 13'),
+            new NameType('Iphone'),
             new DescriptionType('Lala la la'),
             new PriceType(2.20),
             CategoryFixture::$CATEGORY
@@ -31,4 +31,4 @@ class ProductFixtures extends AbstractFixture
 
         $manager->flush();
     }
-}
+}*/
