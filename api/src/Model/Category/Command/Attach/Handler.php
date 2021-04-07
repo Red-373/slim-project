@@ -43,10 +43,10 @@ class Handler
             $product = $this->productRepository->getProduct($productUuid);
 
             if ($product->hasCategory($product)) {
-                throw new DomainException('This product have category id.');
+                throw new DomainException('This product ' . $product->getId()->getValue() . ' have category id.');
             }
             // Зависимая сторона Mappedby (mapped by category(сопоставлено по категориям))
-            // Сторона владелец inversedBy (inversed by product(перевернутый по продукту))
+            // Сторона владелец inversedBy (inversed by products(перевернутый по продукту))
             $product->setCategory($category);
         }
 

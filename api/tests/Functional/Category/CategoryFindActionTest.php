@@ -17,16 +17,16 @@ class CategoryFindActionTest extends WebTestCase
 
     public function testSuccess(): void
     {
-        $name = CategoryFixture::$CATEGORY->getName()->getValue();
+        $category = CategoryFixture::$CATEGORY;
 
-        $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=' . $name));
+        $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue()));
 
         $data = json_decode($response->getBody()->getContents(), true);
 
         $category = [
             [
-                "id" => "642abaa5-481e-4a60-ac3e-b7665f5b53a0",
-                "name" => "Smartphone",
+                "id" => $category->getId()->getValue(),
+                "name" => $category->getName()->getValue(),
                 "products" => []
             ]
         ];

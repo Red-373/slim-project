@@ -17,20 +17,23 @@ class CategoryAllActionTest extends WebTestCase
 
     public function testSuccess(): void
     {
+        $category = CategoryFixture::$CATEGORY;
+        $secondCategory = CategoryFixture::$SECOND_CATEGORY;
+
         $response = $this->app()->handle(self::json('GET', '/v1/categories/all'));
 
         $data = json_decode($response->getBody()->getContents(), true);
 
         $categories = [
             [
-                "id" => "642abaa5-481e-4a60-ac3e-b7665f5b53a0",
-                "name" => "Smartphone",
-                "products" => []
+                "id" => $category->getId()->getValue(),
+                "name" => $category->getName()->getValue(),
+                "products" => $category->getProducts()
             ],
             [
-                "id" => "642abaa5-481e-4a60-ac3e-b7665f5b53a4",
-                "name" => "Phones",
-                "products" => []
+                "id" => $secondCategory->getId()->getValue(),
+                "name" => $secondCategory->getName()->getValue(),
+                "products" => $secondCategory->getProducts()
             ]
         ];
 

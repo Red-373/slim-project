@@ -6,17 +6,18 @@ namespace Test\Fixture\Category;
 
 use App\Model\Category\Entity\Category;
 use App\Model\Category\Type\NameType;
+use App\Model\Product\Entity\Product;
 use App\Model\Type\UuidType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixture extends AbstractFixture
 {
-    private const CORRECT_UUID = '642abaa5-481e-4a60-ac3e-b7665f5b53a0';
-    private const CORRECT_UUID2 = '642abaa5-481e-4a60-ac3e-b7665f5b53a4';
-
     public static Category $CATEGORY;
     public static Category $SECOND_CATEGORY;
+
+    public static Product $PRODUCT;
+    public static Product $SECOND_PRODUCT;
 
     public function load(ObjectManager $manager)
     {
@@ -33,6 +34,20 @@ class CategoryFixture extends AbstractFixture
     {
         return [
             self::$CATEGORY = new Category(
+                UuidType::generate(),
+                new NameType('Smartphone'),
+            ),
+            self::$SECOND_CATEGORY = new Category(
+                UuidType::generate(),
+                new NameType('Phones'),
+            ),
+        ];
+    }
+
+    /*public function createProducts(): array
+    {
+        return [
+            self::$CATEGORY = new Category(
                 new UuidType(self::CORRECT_UUID),
                 new NameType('Smartphone'),
             ),
@@ -41,5 +56,5 @@ class CategoryFixture extends AbstractFixture
                 new NameType('Phones'),
             ),
         ];
-    }
+    }*/
 }

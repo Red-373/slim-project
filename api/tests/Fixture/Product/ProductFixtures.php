@@ -25,7 +25,7 @@ class ProductFixtures extends AbstractFixture
             new NameType('Iphone'),
             new DescriptionType('Lala la la'),
             new PriceType(2.20),
-            new Category(UuidType::generate(), new CategoryName('Category'))
+            new Category(UuidType::generate(), new CategoryName('Categoryfixture'))
         );
 
         $manager->persist(self::$PRODUCT);

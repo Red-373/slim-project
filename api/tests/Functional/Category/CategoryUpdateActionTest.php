@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Test\Functional\Category;
 
+use App\Model\Type\UuidType;
 use Test\Fixture\Category\CategoryFixture;
 use Test\Functional\WebTestCase;
 
@@ -133,5 +134,28 @@ class CategoryUpdateActionTest extends WebTestCase
         self::assertEquals($error, $data);
     }
 
-    // TODO: Make test for Category Not found Exc
+    public function testFailNotFoundCategory(): void
+    {
+        $id = UuidType::generate()->getValue();
+
+        $request = self::json('PUT', '/v1/categories/update');
+
+        $body = [
+            'id' => $id,
+            'name' => 'Name',
+        ];
+
+        $request = $request->withParsedBody($body);
+
+        $response = $this->app()->handle($request);
+
+        $data = json_decode((string)$response->getBody(), true);
+
+        $message = [
+            'message' => 'Not found category for id = ' . $id . '.'
+        ];
+
+        self::assertEquals(409, $response->getStatusCode());
+        self::assertEquals($message, $data);
+    }
 }
