@@ -47,7 +47,7 @@ class Handler
             }
             // Зависимая сторона Mappedby (mapped by category(сопоставлено по категориям))
             // Сторона владелец inversedBy (inversed by products(перевернутый по продукту))
-            $product->setCategory($category);
+            $product->changeCategory($category);
         }
 
         $this->flusher->flush();

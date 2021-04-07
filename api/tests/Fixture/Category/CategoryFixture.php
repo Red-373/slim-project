@@ -56,7 +56,7 @@ class CategoryFixture extends AbstractFixture
     {
         return [
             self::$PRODUCT = new Product(
-                new ProductNameType('Nokia'),
+                new ProductNameType('Huawei'),
                 new DescriptionType('Description first product'),
                 new PriceType(2.55),
                 self::$CATEGORY

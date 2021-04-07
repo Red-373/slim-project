@@ -22,10 +22,10 @@ class ProductFixtures extends AbstractFixture
     public function load(ObjectManager $manager)
     {
         self::$PRODUCT = new Product(
-            new NameType('Iphone'),
+            new NameType('OnePlus'),
             new DescriptionType('Lala la la'),
             new PriceType(2.20),
-            new Category(UuidType::generate(), new CategoryName('Categoryfixture'))
+            new Category(UuidType::generate(), new CategoryName('ProductFixture'))
         );
 
         $manager->persist(self::$PRODUCT);

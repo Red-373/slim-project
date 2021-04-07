@@ -10,7 +10,7 @@ use App\Model\Product\Type\NameType;
 use App\Model\Product\Type\PriceType;
 use App\Model\Type\UuidType;
 use Doctrine\ORM\Mapping as ORM;
-use LogicException;
+use DomainException;
 
 /**
  * Class Product
@@ -65,7 +65,8 @@ class Product
         DescriptionType $description,
         PriceType $price,
         ?Category $category = null
-    ) {
+    )
+    {
         $this->id = UuidType::generate();
         $this->name = $name;
         $this->description = $description;
@@ -108,7 +109,7 @@ class Product
     public function changeName(NameType $anotherName): void
     {
         if (!$this->name->isEqualTo($anotherName)) {
-            throw new LogicException('Same name.');
+            throw new DomainException('Same name.');
         }
         $this->name = $anotherName;
     }
@@ -126,11 +127,9 @@ class Product
         return isset($this->category);
     }
 
-    public function setCategory(Category $category): Product
+    public function changeCategory(Category $category): void
     {
         $this->category = $category;
-
-        return $this;
     }
 
     public function unsetCategory(): void
