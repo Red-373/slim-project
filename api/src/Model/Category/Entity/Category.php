@@ -84,4 +84,9 @@ class Category
     {
         $this->products->add($products);
     }
+
+    public function isEqualTo(self $another): bool
+    {
+        return $this === $another;
+    }
 }

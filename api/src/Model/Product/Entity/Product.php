@@ -129,6 +129,9 @@ class Product
 
     public function changeCategory(Category $category): void
     {
+        if ($this->category->isEqualTo($category)) {
+            throw new DomainException('Same category.');
+        }
         $this->category = $category;
     }
 

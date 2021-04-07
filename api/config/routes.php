@@ -32,5 +32,10 @@ return static function (App $app): void {
             $group->post('/add', ProductAddAction::class);
             $group->get('', ProductAction::class);
         });
+
+        /*$group->group('/tags', function (RouteCollectorProxy $group) {
+            $group->post('/add', TagsAddAction::class);
+            $group->get('', TagsAction::class);
+        });*/
     });
 };
