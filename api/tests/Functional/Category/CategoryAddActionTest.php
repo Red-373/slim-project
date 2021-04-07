@@ -17,17 +17,16 @@ class CategoryAddActionTest extends WebTestCase
 
     public function testSuccess(): void
     {
-        $request = self::json('POST', '/v1/categories/add');
-
         $body = [
-            'name' => 'Nokia',
+            'name' => 'UniqueName',
         ];
 
-        $request = $request->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/add')
+            ->withParsedBody($body);
 
         $response = $this->app()->handle($request);
 
-        $data = json_decode((string)$response->getBody());
+        $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals([], $data);

@@ -7,6 +7,9 @@ namespace Test\Fixture\Category;
 use App\Model\Category\Entity\Category;
 use App\Model\Category\Type\NameType;
 use App\Model\Product\Entity\Product;
+use App\Model\Product\Type\DescriptionType;
+use App\Model\Product\Type\NameType as ProductNameType;
+use App\Model\Product\Type\PriceType;
 use App\Model\Type\UuidType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
@@ -23,8 +26,13 @@ class CategoryFixture extends AbstractFixture
     {
         $categories = $this::createCategories();
 
-        foreach($categories as $category) {
+        foreach ($categories as $category) {
             $manager->persist($category);
+        }
+
+        $products = $this::createProducts();
+        foreach ($products as $product) {
+            $manager->persist($product);
         }
 
         $manager->flush();
@@ -44,17 +52,20 @@ class CategoryFixture extends AbstractFixture
         ];
     }
 
-    /*public function createProducts(): array
+    public static function createProducts(): array
     {
         return [
-            self::$CATEGORY = new Category(
-                new UuidType(self::CORRECT_UUID),
-                new NameType('Smartphone'),
+            self::$PRODUCT = new Product(
+                new ProductNameType('Nokia'),
+                new DescriptionType('Description first product'),
+                new PriceType(2.55),
+                self::$CATEGORY
             ),
-            self::$SECOND_CATEGORY = new Category(
-                new UuidType(self::CORRECT_UUID2),
-                new NameType('Phones'),
+            self::$SECOND_PRODUCT = new Product(
+                new ProductNameType('iPhone'),
+                new DescriptionType('Description second product'),
+                new PriceType(4.55)
             ),
         ];
-    }*/
+    }
 }

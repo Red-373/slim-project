@@ -122,13 +122,9 @@ class Product
         return $this->category;
     }
 
-    public function hasCategory(self $product): bool
+    public function hasCategory(): bool
     {
-        if ($product->category) {
-            return true;
-        }
-
-        return false;
+        return isset($this->category);
     }
 
     public function setCategory(Category $category): Product
@@ -136,5 +132,10 @@ class Product
         $this->category = $category;
 
         return $this;
+    }
+
+    public function unsetCategory(): void
+    {
+        $this->category = null;
     }
 }

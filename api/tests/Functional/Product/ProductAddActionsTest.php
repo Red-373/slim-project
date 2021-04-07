@@ -17,14 +17,14 @@ class ProductAddActionsTest extends WebTestCase
 
     public function testSuccess()
     {
-        $id = CategoryFixture::$CATEGORY->getId()->getValue();
+        $categoryId = CategoryFixture::$CATEGORY->getId()->getValue();
 
         $request = self::json('POST', '/v1/products/add');
 
         $body = [
-            'category_id' => $id,
-            'name' => 'Nokia',
-            'price' => 199,
+            'category_id' => $categoryId,
+            'name' => 'UniqueName',
+            'price' => 199.25,
             'description' => 'Lalalalala lalal alal',
         ];
 
@@ -32,7 +32,7 @@ class ProductAddActionsTest extends WebTestCase
 
         $response = $this->app()->handle($request);
 
-        $data = json_decode((string)$response->getBody());
+        $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         self::assertEquals(200, $response->getStatusCode());

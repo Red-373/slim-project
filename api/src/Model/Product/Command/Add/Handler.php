@@ -12,7 +12,7 @@ use App\Model\Product\Type\DescriptionType;
 use App\Model\Product\Type\NameType;
 use App\Model\Product\Type\PriceType;
 use App\Model\Type\UuidType;
-use LogicException;
+use DomainException;
 
 class Handler
 {
@@ -45,7 +45,7 @@ class Handler
         }
 
         if ($this->repository->hasProductByName($productName)) {
-            throw new LogicException('Product already set!');
+            throw new DomainException('Product already set!');
         }
 
         $product = new Product(

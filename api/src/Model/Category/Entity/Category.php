@@ -75,9 +75,6 @@ class Category
         $this->name = $anotherName;
     }
 
-    /**
-     * @return Product[]
-     */
     public function getProducts(): array
     {
         return $this->products->toArray();

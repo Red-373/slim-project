@@ -18,6 +18,7 @@ class CategoryFindActionTest extends WebTestCase
     public function testSuccess(): void
     {
         $category = CategoryFixture::$CATEGORY;
+        $product = CategoryFixture::$PRODUCT;
 
         $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue()));
 
@@ -27,7 +28,14 @@ class CategoryFindActionTest extends WebTestCase
             [
                 "id" => $category->getId()->getValue(),
                 "name" => $category->getName()->getValue(),
-                "products" => []
+                "products" => [
+                    [
+                        'name' => $product->getName()->getValue(),
+                        'price' => $product->getPrice()->getValue(),
+                        'description' => $product->getDescription()->getValue(),
+                        'id' => $product->getId()->getValue(),
+                    ]
+                ],
             ]
         ];
 

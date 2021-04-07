@@ -10,7 +10,6 @@ use App\Model\Category\Entity\CategoryRepository;
 use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;
 use DomainException;
-use LogicException;
 
 class Handler
 {
