@@ -13,7 +13,7 @@ class NameType
     public function __construct(string $value)
     {
         Assert::regex($value, '/^[a-zA-Zа-яА-Яа]+$/u', 'The name can have only letters and no have spaces.');
-        Assert::minLength($value,3, 'The name cannot be less 3 symbols.');
+        Assert::minLength($value, 3, 'The name cannot be less 3 symbols.');
 
         $this->value = $value;
     }

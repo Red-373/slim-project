@@ -65,8 +65,7 @@ class Product
         DescriptionType $description,
         PriceType $price,
         ?Category $category = null
-    )
-    {
+    ) {
         $this->id = UuidType::generate();
         $this->name = $name;
         $this->description = $description;

@@ -7,8 +7,8 @@ namespace App\Http\Action\V1\Category;
 use App\Http\JsonResponse;
 use App\Http\Validator\Validator;
 use App\Infrastructure\Exception\TypeErrorException;
-use App\Model\Category\Command\Detach\Command;
-use App\Model\Category\Command\Detach\Handler;
+use App\Model\Category\Command\Product\Detach\Command;
+use App\Model\Category\Command\Product\Detach\Handler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -17,7 +17,7 @@ use TypeError;
 class CategoryDetachProductAction implements RequestHandlerInterface
 {
     private Handler $handler;
-    private Validator$validator;
+    private Validator $validator;
 
     public function __construct(Handler $handler, Validator $validator)
     {
@@ -32,6 +32,7 @@ class CategoryDetachProductAction implements RequestHandlerInterface
         $command = new Command();
 
         try {
+            $command->id = $data['id'] ?? '';
             $command->products = $data['products'] ?? '';
         } catch (TypeError $e) {
             throw new TypeErrorException($e->getMessage(), $e->getCode(), $e);

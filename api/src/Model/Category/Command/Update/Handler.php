@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\Category\Command\Update;
 
 use App\Infrastructure\Doctrine\Flusher\Flusher;
-use App\Model\Category\Entity\Category;
 use App\Model\Category\Entity\CategoryRepository;
 use App\Model\Category\Type\NameType;
 use App\Model\Type\UuidType;

@@ -75,7 +75,7 @@ class CategoryRepository
     private function fetch(?Category $category): Category
     {
         if (!$category) {
-            throw new DomainException('Not found category.' );
+            throw new DomainException('Not found category.');
         }
 
         return $category;

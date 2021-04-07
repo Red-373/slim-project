@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Category\Command\Attach;
+namespace App\Model\Category\Command\Product\Attach;
 
 use App\Infrastructure\Doctrine\Flusher\Flusher;
 use App\Model\Category\Entity\CategoryRepository;
@@ -29,7 +29,7 @@ class Handler
         $products = $command->products;
 
         if (!$this->repository->has($categoryId)) {
-            throw new DomainException('Not found category for id = ' . $categoryId->getValue() . '.');
+            throw new DomainException('Not found category id = ' . $categoryId->getValue() . '.');
         }
 
         $category = $this->repository->getCategory($categoryId);
@@ -37,12 +37,12 @@ class Handler
         foreach ($products as $productId) {
             $productUuid = new UuidType($productId);
             if (!$this->productRepository->has($productUuid)) {
-                throw new DomainException('Not found product.');
+                throw new DomainException('Not found product. Product id = ' . $productUuid->getValue() . '.' );
             }
 
             $product = $this->productRepository->getProduct($productUuid);
 
-            if ($product->hasCategory($product)) {
+            if ($product->hasCategory()) {
                 throw new DomainException('This product ' . $product->getId()->getValue() . ' have category id.');
             }
             // Зависимая сторона Mappedby (mapped by category(сопоставлено по категориям))

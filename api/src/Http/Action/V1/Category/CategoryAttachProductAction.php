@@ -7,8 +7,8 @@ namespace App\Http\Action\V1\Category;
 use App\Http\JsonResponse;
 use App\Http\Validator\Validator;
 use App\Infrastructure\Exception\TypeErrorException;
-use App\Model\Category\Command\Attach\Command;
-use App\Model\Category\Command\Attach\Handler;
+use App\Model\Category\Command\Product\Attach\Command;
+use App\Model\Category\Command\Product\Attach\Handler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -17,7 +17,7 @@ use TypeError;
 class CategoryAttachProductAction implements RequestHandlerInterface
 {
     private Handler $handler;
-    private Validator$validator;
+    private Validator $validator;
 
     public function __construct(Handler $handler, Validator $validator)
     {

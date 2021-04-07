@@ -32,7 +32,5 @@ return static function (App $app): void {
             $group->post('/add', ProductAddAction::class);
             $group->get('', ProductAction::class);
         });
-
-
     });
 };

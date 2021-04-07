@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Category\Command\Attach;
+namespace App\Model\Category\Command\Product\Detach;
 
 use Symfony\Component\Validator\Constraints as Assert;
 

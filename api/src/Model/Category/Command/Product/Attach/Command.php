@@ -2,12 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Category\Command\Detach;
+namespace App\Model\Category\Command\Product\Attach;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Command
 {
+    /**
+     * @Assert\NotBlank
+     * @Assert\Uuid()
+     */
+    public string $id;
+
     /**
      * @Assert\Type("array")
      * @Assert\Count(min=1)

@@ -12,13 +12,12 @@ use App\Model\Category\Command\Update\Handler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use TypeError;
 
 class CategoryUpdateAction implements RequestHandlerInterface
 {
     private Handler $handler;
-    private Validator$validator;
+    private Validator $validator;
 
     public function __construct(Handler $handler, Validator $validator)
     {
