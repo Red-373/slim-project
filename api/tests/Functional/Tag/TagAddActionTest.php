@@ -34,9 +34,10 @@ class TagAddActionTest extends WebTestCase
 
     public function testSuccessWithProduct()
     {
+        $productId = TagFixture::$PRODUCT->getId()->getValue();
         $body = [
             'name' => 'UniqueName',
-            'product' => ''
+            'product' => $productId
         ];
 
         $request = self::json('POST', '/v1/tags/add')
@@ -81,6 +82,26 @@ class TagAddActionTest extends WebTestCase
         $errors = [
             'errors' => [
                 'name' => 'This value is too short. It should have 3 characters or more.'
+            ]
+        ];
+
+        self::assertEquals(422, $response->getStatusCode());
+        self::assertEquals($errors, $data);
+    }
+
+    public function testFailIncorrectProductId(): void
+    {
+        $body = [
+            'name' => 'UniqueName',
+            'product' => 'NotValidUUid'
+        ];
+        $request = self::json('POST', '/v1/tags/add')->withParsedBody($body);
+        $response = $this->app()->handle($request);
+        $data = json_decode((string)$response->getBody(), true);
+
+        $errors = [
+            'errors' => [
+                'productId' => 'This is not a valid UUID.'
             ]
         ];
 

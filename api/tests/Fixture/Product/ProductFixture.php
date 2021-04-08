@@ -4,40 +4,63 @@ declare(strict_types=1);
 
 namespace Test\Fixture\Product;
 
-use App\Model\Category\Entity\Category;
 use App\Model\Product\Entity\Product;
 use App\Model\Product\Type\DescriptionType;
 use App\Model\Product\Type\NameType;
 use App\Model\Product\Type\PriceType;
-use App\Model\Type\UuidType;
+use App\Model\Tag\Entity\Tag;
+use App\Model\Tag\Type\NameTagType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
-use App\Model\Category\Type\NameType as CategoryName;
 
 class ProductFixture extends AbstractFixture
 {
     public static Product $PRODUCT;
     public static Product $SECOND_PRODUCT;
 
+    public static Tag $TAG;
+    public static Tag $SECOND_TAG;
+
     public function load(ObjectManager $manager)
     {
-        self::$PRODUCT = new Product(
-            new NameType('OnePlus'),
-            new DescriptionType('Lala la la'),
-            new PriceType(2.20),
-            new Category(UuidType::generate(), new CategoryName('ProductFixture'))
-        );
+        $products = $this->createProducts();
+        foreach ($products as $product) {
+            $manager->persist($product);
+        }
 
-        $manager->persist(self::$PRODUCT);
-
-        self::$SECOND_PRODUCT = new Product(
-            new NameType('Nokia'),
-            new DescriptionType('Lala la la'),
-            new PriceType(2.99)
-        );
-
-        $manager->persist(self::$SECOND_PRODUCT);
+        $tags = $this->createTags();
+        foreach ($tags as $tag) {
+            $manager->persist($tag);
+        }
 
         $manager->flush();
+    }
+
+    public function createProducts(): array
+    {
+        return [
+            self::$PRODUCT = new Product(
+                new NameType('FirstProductNameProductFixture'),
+                new DescriptionType('FirstProductDescriptionProductFixture'),
+                new PriceType(2.55)
+            ),
+            self::$SECOND_PRODUCT = new Product(
+                new NameType('SecondProductNameProductFixture'),
+                new DescriptionType('SecondProductDescriptionProductFixture'),
+                new PriceType(4.55)
+            ),
+        ];
+    }
+
+    public function createTags(): array
+    {
+        return [
+            self::$TAG = new Tag(
+                new NameTagType('FirstTagTagFixture'),
+            ),
+            self::$SECOND_TAG = new Tag(
+                new NameTagType('SecondTagTagFixture'),
+            )
+        ];
     }
 }

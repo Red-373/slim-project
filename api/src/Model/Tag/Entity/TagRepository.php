@@ -55,7 +55,7 @@ class TagRepository
     private function fetch(?Tag $tag): Tag
     {
         if (!$tag) {
-            throw new DomainException('Not found product.');
+            throw new DomainException('Not found tag.');
         }
 
         return $tag;
