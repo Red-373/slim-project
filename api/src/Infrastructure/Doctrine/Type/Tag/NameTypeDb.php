@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Type\Tag;
 
-use App\Model\Tag\Type\NameType;
+use App\Model\Tag\Type\NameTagType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
@@ -14,12 +14,12 @@ class NameTypeDb extends StringType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        return $value instanceof NameType ? $value->getValue() : (string)$value;
+        return $value instanceof NameTagType ? $value->getValue() : (string)$value;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?NameType
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?NameTagType
     {
-        return !empty($value) ? new NameType((string)$value) : null;
+        return !empty($value) ? new NameTagType((string)$value) : null;
     }
 
     public function getName(): string

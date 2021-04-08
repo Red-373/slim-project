@@ -12,9 +12,8 @@ use App\Http\Action\V1\Category\CategoryFindAction;
 use App\Http\Action\V1\Category\CategoryUpdateAction;
 use App\Http\Action\V1\Product\ProductAction;
 use App\Http\Action\V1\Product\ProductAddAction;
-
 use App\Http\Action\V1\Tag\TagAction;
-//use App\Http\Action\V1\Tag\TagAddAction;
+use App\Http\Action\V1\Tag\TagAddAction;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
 
@@ -37,7 +36,7 @@ return static function (App $app): void {
         });
 
         $group->group('/tags', function (RouteCollectorProxy $group) {
-            //$group->post('/add', TagAddAction::class);
+            $group->post('/add', TagAddAction::class);
             $group->get('', TagAction::class);
         });
     });

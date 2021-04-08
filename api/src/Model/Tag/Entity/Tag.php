@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Tag\Entity;
 
-use App\Model\Tag\Type\NameType;
+use App\Model\Tag\Type\NameTagType;
 use App\Model\Type\UuidType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,10 +27,10 @@ class Tag
     private UuidType $id;
 
     /**
-     * @var NameType
+     * @var NameTagType
      * @ORM\Column(type="tag_name_type")
      */
-    private NameType $name;
+    private NameTagType $name;
 
     /**
      * @var Collection
@@ -38,7 +38,7 @@ class Tag
      */
     private Collection $products;
 
-    public function __construct(NameType $name)
+    public function __construct(NameTagType $name)
     {
         $this->id = UuidType::generate();
         $this->name = $name;
@@ -50,12 +50,12 @@ class Tag
         return $this->id;
     }
 
-    public function getName(): NameType
+    public function getName(): NameTagType
     {
         return $this->name;
     }
 
-    public function changeName(NameType $anotherName): void
+    public function changeName(NameTagType $anotherName): void
     {
         if (!$this->name->isEqualTo($anotherName)) {
             throw new DomainException('Same name.');

@@ -14,7 +14,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Model\Category\Type\NameType as CategoryName;
 
-class ProductFixtures extends AbstractFixture
+class ProductFixture extends AbstractFixture
 {
     public static Product $PRODUCT;
     public static Product $SECOND_PRODUCT;

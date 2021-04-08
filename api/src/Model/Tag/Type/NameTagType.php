@@ -6,7 +6,7 @@ namespace App\Model\Tag\Type;
 
 use Webmozart\Assert\Assert;
 
-class NameType
+class NameTagType
 {
     private string $value;
 

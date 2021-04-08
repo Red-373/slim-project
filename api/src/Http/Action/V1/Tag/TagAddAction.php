@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Action\V1\Tag;
 
-/*use App\Http\JsonResponse;
+use App\Http\JsonResponse;
 use App\Http\Validator\Validator;
 use App\Infrastructure\Exception\TypeErrorException;
 use App\Model\Tag\Command\Add\Command;
@@ -43,4 +43,4 @@ class TagAddAction implements RequestHandlerInterface
 
         return new JsonResponse([]);
     }
-}*/
+}

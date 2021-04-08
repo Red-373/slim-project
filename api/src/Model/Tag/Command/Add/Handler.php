@@ -4,53 +4,37 @@ declare(strict_types=1);
 
 namespace App\Model\Tag\Command\Add;
 
-/*use App\Infrastructure\Doctrine\Flusher\Flusher;
-use App\Model\Type\UuidType;
+use App\Infrastructure\Doctrine\Flusher\Flusher;
+use App\Model\Tag\Entity\Tag;
+use App\Model\Tag\Entity\TagRepository;
+use App\Model\Tag\Type\NameTagType;
 use DomainException;
 
 class Handler
 {
-    private CategoryRepository $categoryRepository;
-    private ProductRepository $repository;
+    private TagRepository $tagRepository;
     private Flusher $flusher;
 
-    public function __construct(CategoryRepository $categoryRepository, ProductRepository $repository, Flusher $flusher)
+    public function __construct(TagRepository $tagRepository, Flusher $flusher)
     {
-        $this->categoryRepository = $categoryRepository;
-        $this->repository = $repository;
+        $this->tagRepository = $tagRepository;
         $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
     {
         $name = $command->name;
-        $description = $command->description;
-        $price = $command->price;
 
-        $productName = new NameType($name);
-        $productDescription = new DescriptionType($description);
-        $productPrice = new PriceType($price);
-        $categoryId = !empty($command->categoryId) ? new UuidType($command->categoryId) : null;
+        $tagName = new NameTagType($name);
 
-        $category = null;
-
-        if ($categoryId) {
-            $category = $this->categoryRepository->getCategory($categoryId);
+        if ($this->tagRepository->hasTagByName($tagName)) {
+            throw new DomainException('Tag already set!');
         }
 
-        if ($this->repository->hasProductByName($productName)) {
-            throw new DomainException('Product already set!');
-        }
+        $tag = new Tag($tagName);
 
-        $product = new Product(
-            $productName,
-            $productDescription,
-            $productPrice,
-            $category
-        );
-
-        $this->repository->addProduct($product);
+        $this->tagRepository->addTag($tag);
 
         $this->flusher->flush();
     }
-}*/
+}
