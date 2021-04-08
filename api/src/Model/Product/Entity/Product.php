@@ -9,7 +9,11 @@ use App\Model\Product\Type\DescriptionType;
 use App\Model\Product\Type\NameType;
 use App\Model\Product\Type\PriceType;
 use App\Model\Type\UuidType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
 use DomainException;
 
 /**
@@ -60,6 +64,12 @@ class Product
      */
     private ?Category $category;
 
+    /**
+     * @ManyToMany(targetEntity="App\Model\Tag\Entity\Tag", inversedBy="products")
+     * @JoinTable(name="products_tags")
+     */
+    private Collection $tags;
+
     public function __construct(
         NameType $name,
         DescriptionType $description,
@@ -72,6 +82,7 @@ class Product
         $this->description = $description;
         $this->price = $price;
         $this->category = $category;
+        $this->tags = new ArrayCollection();
     }
 
     /**

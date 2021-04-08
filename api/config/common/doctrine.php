@@ -5,6 +5,7 @@ declare(strict_types=1);
 use App\Infrastructure\Doctrine\Type\Category\NameTypeDb;
 use App\Infrastructure\Doctrine\Type\Product\DescriptionTypeDb;
 use App\Infrastructure\Doctrine\Type\Product\NameTypeDb as ProductNameTypeDb;
+use App\Infrastructure\Doctrine\Type\Tag\NameTypeDb as TagNameTypeDb;
 use App\Infrastructure\Doctrine\Type\Product\PriceTypeDb;
 use App\Infrastructure\Doctrine\Type\UuidTypeDb;
 use Doctrine\Common\Cache\ArrayCache;
@@ -71,13 +72,17 @@ return [
             'metadata_dirs' => [
                 __DIR__ . '/../../src/Model/Category/Entity',
                 __DIR__ . '/../../src/Model/Product/Entity',
+                __DIR__ . '/../../src/Model/Tag/Entity',
             ],
             'types' => [
                 UuidTypeDb::NAME => UuidTypeDb::class,
                 NameTypeDb::NAME => NameTypeDb::class,
+
                 ProductNameTypeDb::NAME => ProductNameTypeDb::class,
                 DescriptionTypeDb::NAME => DescriptionTypeDb::class,
                 PriceTypeDb::NAME => PriceTypeDb::class,
+
+                TagNameTypeDb::NAME => TagNameTypeDb::class,
             ],
         ]
     ]
