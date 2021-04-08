@@ -7,14 +7,14 @@ namespace App\Http\Action\V1\Tag;
 use App\Http\JsonResponse;
 use App\Http\Validator\Validator;
 use App\Infrastructure\Exception\TypeErrorException;
-use App\Model\Tag\Command\Add\Command;
-use App\Model\Tag\Command\Add\Handler;
-use Psr\Http\Message\ServerRequestInterface;
+use App\Model\Tag\Command\Product\Attach\Command;
+use App\Model\Tag\Command\Product\Attach\Handler;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TypeError;
 
-class TagAddAction implements RequestHandlerInterface
+class TagAttachProductAction implements RequestHandlerInterface
 {
     private Handler $handler;
     private Validator $validator;
@@ -32,8 +32,8 @@ class TagAddAction implements RequestHandlerInterface
         $command = new Command();
 
         try {
-            $command->name = $data['name'] ?? '';
-            $command->productId = $data['product'] ?? '';
+            $command->id = $data['id'] ?? '';
+            $command->products = $data['products'] ?? '';
         } catch (TypeError $e) {
             throw new TypeErrorException($e->getMessage(), $e->getCode(), $e);
         }

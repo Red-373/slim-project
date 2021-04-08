@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Action\V1\Tag;
+namespace App\Http\Action\V1\Product;
 
 use App\Http\JsonResponse;
 use App\Http\Validator\Validator;
 use App\Infrastructure\Exception\TypeErrorException;
-use App\Model\Tag\Command\Add\Command;
-use App\Model\Tag\Command\Add\Handler;
-use Psr\Http\Message\ServerRequestInterface;
+use App\Model\Product\Command\Tag\Attach\Command;
+use App\Model\Product\Command\Tag\Attach\Handler;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use TypeError;
 
-class TagAddAction implements RequestHandlerInterface
+class ProductAttachTagAction implements RequestHandlerInterface
 {
     private Handler $handler;
     private Validator $validator;
@@ -32,8 +32,8 @@ class TagAddAction implements RequestHandlerInterface
         $command = new Command();
 
         try {
-            $command->name = $data['name'] ?? '';
-            $command->productId = $data['product'] ?? '';
+            $command->id = $data['id'] ?? '';
+            $command->tags = $data['tags'] ?? '';
         } catch (TypeError $e) {
             throw new TypeErrorException($e->getMessage(), $e->getCode(), $e);
         }

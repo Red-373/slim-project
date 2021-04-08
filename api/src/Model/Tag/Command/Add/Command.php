@@ -13,4 +13,9 @@ class Command
      * @Assert\Length(min=3)
      */
     public string $name;
+
+    /**
+     * @Assert\Uuid
+     */
+    public string $productId;
 }

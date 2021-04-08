@@ -8,6 +8,7 @@ use App\Model\Category\Entity\Category;
 use App\Model\Product\Type\DescriptionType;
 use App\Model\Product\Type\NameType;
 use App\Model\Product\Type\PriceType;
+use App\Model\Tag\Entity\Tag;
 use App\Model\Type\UuidType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -146,5 +147,22 @@ class Product
     public function unsetCategory(): void
     {
         $this->category = null;
+    }
+
+    public function attachTags(Collection $tags): void
+    {
+        if ($this->tags->toArray() === $tags->toArray()) {
+            throw new DomainException('Same tags.');
+        }
+        $this->tags = $tags;
+    }
+
+    public function addTag(Tag $tag): void
+    {
+        if ($this->tags->contains($tag)) {
+            throw new DomainException('This product have this tag. Tag id = ' . $tag->getId()->getValue() . '.');
+        }
+
+        $this->tags->add($tag);
     }
 }

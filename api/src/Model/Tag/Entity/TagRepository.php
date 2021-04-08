@@ -32,10 +32,10 @@ class TagRepository
 
     public function getTag(UuidType $id): Tag
     {
-        /** @var Tag|null $product */
-        $product = $this->repo->find($id->getValue());
+        /** @var Tag|null $tag */
+        $tag = $this->repo->find($id->getValue());
 
-        return $this->fetch($product);
+        return $this->fetch($tag);
     }
 
     public function hasTagByName(NameTagType $name): bool

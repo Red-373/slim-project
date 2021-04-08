@@ -28,7 +28,7 @@ class Tag
 
     /**
      * @var NameTagType
-     * @ORM\Column(type="tag_name_type")
+     * @ORM\Column(type="tag_name_type", unique=true)
      */
     private NameTagType $name;
 
@@ -66,5 +66,12 @@ class Tag
     public function getProducts(): array
     {
         return $this->products->toArray();
+    }
+
+    public function attachProducts(Collection $products): void
+    {
+        foreach ($products as $product) {
+            $product->attachTags(new ArrayCollection([$this]));
+        }
     }
 }
