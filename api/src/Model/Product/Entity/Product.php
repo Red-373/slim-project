@@ -76,8 +76,7 @@ class Product
         DescriptionType $description,
         PriceType $price,
         ?Category $category = null
-    )
-    {
+    ) {
         $this->id = UuidType::generate();
         $this->name = $name;
         $this->description = $description;
@@ -157,7 +156,7 @@ class Product
         $this->tags = $tags;
     }
 
-    public function addTag(Tag $tag): void
+    public function attachTag(Tag $tag): void
     {
         if ($this->tags->contains($tag)) {
             throw new DomainException('This product have this tag. Tag id = ' . $tag->getId()->getValue() . '.');

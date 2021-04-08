@@ -43,7 +43,7 @@ class Handler
             $productUuid = new UuidType($productId);
             $product = $this->productRepository->getProduct($productUuid);
 
-            $product->addTag($tag);
+            $product->attachTag($tag);
         }
 
         $this->flusher->flush();

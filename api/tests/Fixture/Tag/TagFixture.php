@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Test\Fixture\Tag;
 
+use App\Model\Product\Entity\Product;
 use App\Model\Tag\Entity\Tag;
 use App\Model\Tag\Type\NameTagType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
@@ -14,20 +15,28 @@ class TagFixture extends AbstractFixture
     public static Tag $TAG;
     public static Tag $SECOND_TAG;
 
+    public static Product $PRODUCT;
+
     public function load(ObjectManager $manager)
     {
-        self::$TAG = new Tag(
-            new NameTagType('Smartphones'),
-        );
+        $tags = $this->createTags();
 
-        $manager->persist(self::$TAG);
-
-        self::$SECOND_TAG = new Tag(
-            new NameTagType('Apple'),
-        );
-
-        $manager->persist(self::$SECOND_TAG);
+        foreach ($tags as $tag) {
+            $manager->persist($tag);
+        }
 
         $manager->flush();
+    }
+
+    public function createTags(): array
+    {
+        return [
+            self::$TAG = new Tag(
+                new NameTagType('Smartphones'),
+            ),
+            self::$SECOND_TAG = new Tag(
+                new NameTagType('Apple'),
+            )
+        ];
     }
 }

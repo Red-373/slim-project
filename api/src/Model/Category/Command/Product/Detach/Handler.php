@@ -42,12 +42,14 @@ class Handler
 
             if (!$product->hasCategory()) {
                 throw new DomainException(
-                    'This product dont have category id. Product id = ' . $product->getId()->getValue() . '.');
+                    'This product dont have category id. Product id = ' . $product->getId()->getValue() . '.'
+                );
             }
 
             if ($product->getCategory()->getId()->getValue() !== $categoryId->getValue()) {
                 throw new DomainException(
-                    'This product does not match category. Category id = ' . $categoryId->getValue() . '.');
+                    'This product does not match category. Category id = ' . $categoryId->getValue() . '.'
+                );
             }
 
             $product->unsetCategory();

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Tag\Entity;
 
+use App\Model\Product\Entity\Product;
 use App\Model\Tag\Type\NameTagType;
 use App\Model\Type\UuidType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -73,5 +74,10 @@ class Tag
         foreach ($products as $product) {
             $product->attachTags(new ArrayCollection([$this]));
         }
+    }
+
+    public function attachProduct(Product $product): void
+    {
+        $product->attachTag($this);
     }
 }

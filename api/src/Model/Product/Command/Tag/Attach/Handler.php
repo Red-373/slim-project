@@ -8,7 +8,6 @@ use App\Infrastructure\Doctrine\Flusher\Flusher;
 use App\Model\Product\Entity\ProductRepository;
 use App\Model\Tag\Entity\TagRepository;
 use App\Model\Type\UuidType;
-use Doctrine\Common\Collections\ArrayCollection;
 use DomainException;
 
 class Handler
@@ -33,22 +32,19 @@ class Handler
             throw new DomainException('Not found product. Product id = ' . $productUuid->getValue() . '.');
         }
 
-        $tagsCollection = new ArrayCollection();
+        $product = $this->productRepository->getProduct($productUuid);
 
         foreach ($tags as $tagId) {
             $tagUuid = new UuidType($tagId);
 
             if (!$this->tagRepository->has($tagUuid)) {
-                throw new DomainException('Not found tag. Tag id = ' . $tagUuid->getValue() . '.' );
+                throw new DomainException('Not found tag. Tag id = ' . $tagUuid->getValue() . '.');
             }
 
             $tag = $this->tagRepository->getTag($tagUuid);
 
-            $tagsCollection->add($tag);
+            $product->attachTag($tag);
         }
-
-        $product = $this->productRepository->getProduct($productUuid);
-        $product->attachTags($tagsCollection);
 
         $this->flusher->flush();
     }

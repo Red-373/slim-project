@@ -8,7 +8,6 @@ use App\Infrastructure\Doctrine\Flusher\Flusher;
 use App\Model\Product\Entity\ProductRepository;
 use App\Model\Tag\Entity\TagRepository;
 use App\Model\Type\UuidType;
-use Doctrine\Common\Collections\ArrayCollection;
 use DomainException;
 
 class Handler
@@ -34,7 +33,6 @@ class Handler
         }
 
         $tag = $this->tagRepository->getTag($tagUuid);
-        $productsCollection = new ArrayCollection();
 
         foreach ($products as $productId) {
             $productUuid = new UuidType($productId);
@@ -44,10 +42,9 @@ class Handler
             }
 
             $product = $this->productRepository->getProduct($productUuid);
-            $productsCollection->add($product);
-        }
 
-        $tag->attachProducts($productsCollection);
+            $tag->attachProduct($product);
+        }
 
         $this->flusher->flush();
     }

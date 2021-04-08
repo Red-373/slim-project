@@ -37,7 +37,7 @@ class Handler
         foreach ($products as $productId) {
             $productUuid = new UuidType($productId);
             if (!$this->productRepository->has($productUuid)) {
-                throw new DomainException('Not found product. Product id = ' . $productUuid->getValue() . '.' );
+                throw new DomainException('Not found product. Product id = ' . $productUuid->getValue() . '.');
             }
 
             $product = $this->productRepository->getProduct($productUuid);

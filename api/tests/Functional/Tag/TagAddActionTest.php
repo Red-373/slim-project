@@ -32,6 +32,24 @@ class TagAddActionTest extends WebTestCase
         self::assertEquals([], $data);
     }
 
+    public function testSuccessWithProduct()
+    {
+        $body = [
+            'name' => 'UniqueName',
+            'product' => ''
+        ];
+
+        $request = self::json('POST', '/v1/tags/add')
+            ->withParsedBody($body);
+
+        $response = $this->app()->handle($request);
+
+        $data = json_decode((string)$response->getBody(), true);
+
+        self::assertEquals(200, $response->getStatusCode());
+        self::assertEquals([], $data);
+    }
+
     public function testFailTagAlreadySet(): void
     {
         $name = TagFixture::$TAG->getName()->getValue();
