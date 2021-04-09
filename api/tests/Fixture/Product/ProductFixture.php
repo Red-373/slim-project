@@ -4,17 +4,22 @@ declare(strict_types=1);
 
 namespace Test\Fixture\Product;
 
+use App\Model\Category\Entity\Category;
+use App\Model\Category\Type\NameType as CategoryNameType;
 use App\Model\Product\Entity\Product;
 use App\Model\Product\Type\DescriptionType;
 use App\Model\Product\Type\NameType;
 use App\Model\Product\Type\PriceType;
 use App\Model\Tag\Entity\Tag;
 use App\Model\Tag\Type\NameTagType;
+use App\Model\Type\UuidType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
 
 class ProductFixture extends AbstractFixture
 {
+    public static Category $CATEGORY;
+
     public static Product $PRODUCT;
     public static Product $SECOND_PRODUCT;
 
@@ -42,7 +47,11 @@ class ProductFixture extends AbstractFixture
             self::$PRODUCT = new Product(
                 new NameType('FirstProductNameProductFixture'),
                 new DescriptionType('FirstProductDescriptionProductFixture'),
-                new PriceType(2.55)
+                new PriceType(2.55),
+                self::$CATEGORY = new Category(
+                    UuidType::generate(),
+                    new CategoryNameType('Smartphone'),
+                ),
             ),
             self::$SECOND_PRODUCT = new Product(
                 new NameType('SecondProductNameProductFixture'),

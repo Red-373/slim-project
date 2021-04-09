@@ -2,50 +2,58 @@
 
 declare(strict_types=1);
 
-namespace Test\Functional\Tag;
+namespace Test\Functional\Product;
 
 use App\Model\Type\UuidType;
-use Test\Fixture\Tag\TagFixture;
+use Test\Fixture\Product\ProductFixture;
 use Test\Functional\WebTestCase;
 
-class TagActionTest extends WebTestCase
+class ProductActionTest extends WebTestCase
 {
     protected function setUp(): void
     {
         parent::setUp();
-        $this->loadFixtures([TagFixture::class]);
+        $this->loadFixtures([ProductFixture::class]);
     }
 
-    public function testSuccess()
+    public function testSuccess(): void
     {
-        $tagId = TagFixture::$TAG->getId()->getValue();
+        $product= ProductFixture::$PRODUCT;
 
         $queryParams = [
-            'id' => $tagId,
+            'id' => $product->getId()->getValue()
         ];
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
+
+        $request = self::json('GET', '/v1/products')
+            ->withQueryParams($queryParams);
 
         $response = $this->app()->handle($request);
+
         $data = json_decode((string)$response->getBody(), true);
 
-        $tags = [
-            'id' => $tagId,
-            'products' => []
+        $product = [
+            'id' => $product->getId()->getValue(),
+            'name' => $product->getName()->getValue(),
+            'description' => $product->getDescription()->getValue(),
+            'price' => $product->getPrice()->getValue(),
+            'category_id' => $product->getCategory()->getId()->getValue(),
         ];
 
-        self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals($tags, $data);
+        self::assertEquals($product, $data);
     }
 
     public function testFailEmptyId(): void
     {
         $queryParams = [
-            'id' => '',
+            'id' => ''
         ];
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
+
+        $request = self::json('GET', '/v1/products')
+            ->withQueryParams($queryParams);
 
         $response = $this->app()->handle($request);
+
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -61,11 +69,14 @@ class TagActionTest extends WebTestCase
     public function testFailIncorrectId(): void
     {
         $queryParams = [
-            'id' => 'incorrectUuid',
+            'id' => 'InvalidProductId'
         ];
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
+
+        $request = self::json('GET', '/v1/products')
+            ->withQueryParams($queryParams);
 
         $response = $this->app()->handle($request);
+
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -78,20 +89,22 @@ class TagActionTest extends WebTestCase
         self::assertEquals($errors, $data);
     }
 
-    public function testFailNotFoundTag(): void
+    public function testFailNotFoundProduct(): void
     {
         $undefinedId = UuidType::generate()->getValue();
         $queryParams = [
-            'id' => $undefinedId,
+            'id' => $undefinedId
         ];
 
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
+        $request = self::json('GET', '/v1/products')
+            ->withQueryParams($queryParams);
 
         $response = $this->app()->handle($request);
+
         $data = json_decode((string)$response->getBody(), true);
 
         $message = [
-            'message' => 'Not found tag.'
+            'message' => 'Not found product.'
         ];
 
         self::assertEquals(409, $response->getStatusCode());
