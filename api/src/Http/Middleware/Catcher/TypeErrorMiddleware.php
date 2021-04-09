@@ -19,7 +19,7 @@ class TypeErrorMiddleware implements MiddlewareInterface
             return $handler->handle($request);
         } catch (TypeErrorException $e) {
             return new JsonResponse([
-                'errors' => $e->getMessage()
+                'errors' => stristr($e->getMessage(), '$')
             ], 422);
         }
     }

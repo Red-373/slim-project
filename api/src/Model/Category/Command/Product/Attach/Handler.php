@@ -12,15 +12,15 @@ use DomainException;
 
 class Handler
 {
-    private CategoryRepository $repository;
-    private Flusher $flusher;
+    private CategoryRepository $categoryRepository;
     private ProductRepository $productRepository;
+    private Flusher $flusher;
 
-    public function __construct(CategoryRepository $repository, Flusher $flusher, ProductRepository $productRepository)
+    public function __construct(CategoryRepository $categoryRepository, ProductRepository $productRepository, Flusher $flusher)
     {
-        $this->repository = $repository;
-        $this->flusher = $flusher;
+        $this->categoryRepository = $categoryRepository;
         $this->productRepository = $productRepository;
+        $this->flusher = $flusher;
     }
 
     public function handle(Command $command): void
@@ -28,11 +28,11 @@ class Handler
         $categoryId = new UuidType($command->id);
         $products = $command->products;
 
-        if (!$this->repository->has($categoryId)) {
+        if (!$this->categoryRepository->has($categoryId)) {
             throw new DomainException('Not found category id = ' . $categoryId->getValue() . '.');
         }
 
-        $category = $this->repository->getCategory($categoryId);
+        $category = $this->categoryRepository->getCategory($categoryId);
 
         foreach ($products as $productId) {
             $productUuid = new UuidType($productId);
