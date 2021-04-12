@@ -43,11 +43,11 @@ class CategoryFixture extends AbstractFixture
         return [
             self::$CATEGORY = new Category(
                 UuidType::generate(),
-                new NameType('Smartphone'),
+                new NameType('CategoryFixtureCategoryName'),
             ),
             self::$SECOND_CATEGORY = new Category(
                 UuidType::generate(),
-                new NameType('Phones'),
+                new NameType('CategoryFixtureCategoryNameSec'),
             ),
         ];
     }
@@ -56,14 +56,14 @@ class CategoryFixture extends AbstractFixture
     {
         return [
             self::$PRODUCT = new Product(
-                new ProductNameType('Huawei'),
-                new DescriptionType('Description first product'),
+                new ProductNameType('CategoryFixtureProductName'),
+                new DescriptionType('CategoryFixtureProductDesc'),
                 new PriceType(2.55),
                 self::$CATEGORY
             ),
             self::$SECOND_PRODUCT = new Product(
-                new ProductNameType('iPhone'),
-                new DescriptionType('Description second product'),
+                new ProductNameType('CategoryFixtureProductNameSec'),
+                new DescriptionType('CategoryFixtureProductDescSec'),
                 new PriceType(4.55)
             ),
         ];

@@ -30,7 +30,7 @@ class Handler
             throw new DomainException('Category already set!');
         }
 
-        $this->repository->addCategory($category);
+        $this->repository->add($category);
 
         $this->flusher->flush();
     }

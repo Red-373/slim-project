@@ -18,13 +18,14 @@ class CategoryFindActionTest extends WebTestCase
     public function testSuccess(): void
     {
         $category = CategoryFixture::$CATEGORY;
+        $secondCategory = CategoryFixture::$SECOND_CATEGORY;
         $product = CategoryFixture::$PRODUCT;
 
         $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue()));
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        $category = [
+        $categories = [
             [
                 "id" => $category->getId()->getValue(),
                 "name" => $category->getName()->getValue(),
@@ -36,11 +37,16 @@ class CategoryFindActionTest extends WebTestCase
                         'id' => $product->getId()->getValue(),
                     ]
                 ],
+            ],
+            [
+                "id" => $secondCategory->getId()->getValue(),
+                "name" => $secondCategory->getName()->getValue(),
+                "products" => []
             ]
         ];
 
         self::assertEquals(200, $response->getStatusCode());
-        self::assertEquals($category, $data);
+        self::assertEquals($categories, $data);
     }
 
     public function testFailUndefinedName(): void

@@ -50,7 +50,7 @@ class ProductFixture extends AbstractFixture
                 new PriceType(2.55),
                 self::$CATEGORY = new Category(
                     UuidType::generate(),
-                    new CategoryNameType('Smartphone'),
+                    new CategoryNameType('CategoryNameProductFixture'),
                 ),
             ),
             self::$SECOND_PRODUCT = new Product(
@@ -65,10 +65,10 @@ class ProductFixture extends AbstractFixture
     {
         return [
             self::$TAG = new Tag(
-                new NameTagType('FirstTagTagFixture'),
+                new NameTagType('FirstTagProductFixture'),
             ),
             self::$SECOND_TAG = new Tag(
-                new NameTagType('SecondTagTagFixture'),
+                new NameTagType('SecondTagProductFixture'),
             )
         ];
     }

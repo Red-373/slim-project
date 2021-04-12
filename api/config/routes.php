@@ -7,6 +7,7 @@ use App\Http\Action\V1\Category\CategoryAction;
 use App\Http\Action\V1\Category\CategoryAddAction;
 use App\Http\Action\V1\Category\CategoryAllAction;
 use App\Http\Action\V1\Category\CategoryAttachProductAction;
+use App\Http\Action\V1\Category\CategoryDeleteAction;
 use App\Http\Action\V1\Category\CategoryDetachProductAction;
 use App\Http\Action\V1\Category\CategoryFindAction;
 use App\Http\Action\V1\Category\CategoryUpdateAction;
@@ -30,6 +31,7 @@ return static function (App $app): void {
             $group->put('/update', CategoryUpdateAction::class);
             $group->post('/attach/products', CategoryAttachProductAction::class);
             $group->post('/detach/products', CategoryDetachProductAction::class);
+            $group->delete('/delete', CategoryDeleteAction::class);
         });
 
         $group->group('/products', function (RouteCollectorProxy $group) {

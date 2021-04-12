@@ -48,7 +48,7 @@ class CategoryRepository
         return $this->repo->findAll();
     }
 
-    public function addCategory(Category $category): void
+    public function add(Category $category): void
     {
         $this->em->persist($category);
     }
@@ -69,6 +69,11 @@ class CategoryRepository
                 ->andWhere('t.name = :name')
                 ->setParameter(':name', $name->getValue())
                 ->getQuery()->getSingleScalarResult() > 0;
+    }
+
+    public function remove(Category $category)
+    {
+        $this->em->remove($category);
     }
 
 
