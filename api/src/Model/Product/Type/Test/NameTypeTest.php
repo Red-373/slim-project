@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Type\Test;
 
-use App\Model\Product\Type\NameType;
+use App\Model\Product\Type\NameProductType;
 use Monolog\Test\TestCase;
 use Webmozart\Assert\InvalidArgumentException;
 
@@ -11,14 +11,14 @@ class NameTypeTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $nameType = new NameType($value = 'ValidName');
+        $nameType = new NameProductType($value = 'ValidName');
         self::assertEquals($value, $nameType->getValue());
     }
 
     public function testFailRegexExceptionMessage(): void
     {
         try {
-            new NameType('Invalid name');
+            new NameProductType('Invalid name');
         } catch (InvalidArgumentException $e) {
             self::assertTrue($e->getMessage() === 'The product name can have only letters and no have spaces.');
         }
@@ -27,13 +27,13 @@ class NameTypeTest extends TestCase
     public function testFailRegexException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new NameType('Invalid name');
+        new NameProductType('Invalid name');
     }
 
     public function testLengthExceptionMessage(): void
     {
         try {
-            new NameType('in');
+            new NameProductType('in');
         } catch (InvalidArgumentException $e) {
             self::assertTrue($e->getMessage() === 'The product name cannot be less 3 symbols.');
         }
@@ -42,15 +42,15 @@ class NameTypeTest extends TestCase
     public function testLengthException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new NameType('in');
+        new NameProductType('in');
     }
 
     public function testIsEqualTo(): void
     {
-        $nameType = new NameType($value = 'FirstDescription');
-        $nameTypeSec = new NameType('SecondDescription');
+        $nameType = new NameProductType($value = 'FirstDescription');
+        $nameTypeSec = new NameProductType('SecondDescription');
 
-        self::assertTrue($nameType->isEqualTo(new NameType($value)));
+        self::assertTrue($nameType->isEqualTo(new NameProductType($value)));
         self::assertFalse($nameType->isEqualTo($nameTypeSec));
     }
 }

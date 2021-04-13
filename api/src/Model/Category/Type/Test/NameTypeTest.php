@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Type\Test;
 
-use App\Model\Category\Type\NameType;
+use App\Model\Category\Type\NameCategoryType;
 use PHPUnit\Framework\TestCase;
 use Webmozart\Assert\InvalidArgumentException;
 
@@ -12,8 +12,8 @@ class NameTypeTest extends TestCase
 {
     public function testSuccess(): void
     {
-        $nameTypeEn = new NameType($valueEn = 'Tea');
-        $nameTypeRus = new NameType($valueRus = 'Чай');
+        $nameTypeEn = new NameCategoryType($valueEn = 'Tea');
+        $nameTypeRus = new NameCategoryType($valueRus = 'Чай');
 
         self::assertEquals($valueEn, $nameTypeEn->getValue());
         self::assertEquals($valueRus, $nameTypeRus->getValue());
@@ -22,7 +22,7 @@ class NameTypeTest extends TestCase
     public function testExceptionMessage(): void
     {
         try {
-            new NameType('123');
+            new NameCategoryType('123');
         } catch (InvalidArgumentException $e) {
             self::assertTrue($e->getMessage() === 'The name can have only letters and no have spaces.');
         }
@@ -31,13 +31,13 @@ class NameTypeTest extends TestCase
     public function testException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new NameType('123');
+        new NameCategoryType('123');
     }
 
     public function testLengthExceptionMessage(): void
     {
         try {
-            new NameType('on');
+            new NameCategoryType('on');
         } catch (InvalidArgumentException $e) {
             self::assertTrue($e->getMessage() === 'The name cannot be less 3 symbols.');
         }
@@ -46,15 +46,15 @@ class NameTypeTest extends TestCase
     public function testLengthException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new NameType('on');
+        new NameCategoryType('on');
     }
 
     public function testIsEqualTo(): void
     {
-        $nameType = new NameType($value = 'Tea');
-        $nameType2 = new NameType($value2 = 'Coffee');
+        $nameType = new NameCategoryType($value = 'Tea');
+        $nameType2 = new NameCategoryType('Coffee');
 
-        self::assertTrue($nameType->isEqualTo(new NameType($value)));
+        self::assertTrue($nameType->isEqualTo(new NameCategoryType($value)));
         self::assertFalse($nameType->isEqualTo($nameType2));
     }
 }

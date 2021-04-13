@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Model\Product\Entity;
 
 use App\Model\Category\Entity\Category;
-use App\Model\Product\Type\DescriptionType;
-use App\Model\Product\Type\NameType;
-use App\Model\Product\Type\PriceType;
+use App\Model\Product\Type\DescriptionProductType;
+use App\Model\Product\Type\NameProductType;
+use App\Model\Product\Type\PriceProductType;
 use App\Model\Tag\Entity\Tag;
 use App\Model\Type\UuidType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -33,29 +33,29 @@ class Product
     private UuidType $id;
 
     /**
-     * @var NameType
+     * @var NameProductType
      * @ORM\Column(type="product_name_type")
      */
-    private NameType $name;
+    private NameProductType $name;
 
     /**
-     * @var DescriptionType
+     * @var DescriptionProductType
      * @ORM\Column(type="product_description_type")
      */
-    private DescriptionType $description;
+    private DescriptionProductType $description;
 
     /**
-     * @var PriceType
+     * @var PriceProductType
      * @ORM\Column(type="product_price_type")
      */
-    private PriceType $price;
+    private PriceProductType $price;
 
     /**
      * Product constructor.
      * @param UuidType $id
-     * @param NameType $name
-     * @param DescriptionType $description
-     * @param PriceType $price
+     * @param NameProductType $name
+     * @param DescriptionProductType $description
+     * @param PriceProductType $price
      */
 
     /**
@@ -72,9 +72,9 @@ class Product
     private Collection $tags;
 
     public function __construct(
-        NameType $name,
-        DescriptionType $description,
-        PriceType $price,
+        NameProductType $name,
+        DescriptionProductType $description,
+        PriceProductType $price,
         ?Category $category = null
     ) {
         $this->id = UuidType::generate();
@@ -94,30 +94,30 @@ class Product
     }
 
     /**
-     * @return NameType
+     * @return NameProductType
      */
-    public function getName(): NameType
+    public function getName(): NameProductType
     {
         return $this->name;
     }
 
     /**
-     * @return DescriptionType
+     * @return DescriptionProductType
      */
-    public function getDescription(): DescriptionType
+    public function getDescription(): DescriptionProductType
     {
         return $this->description;
     }
 
     /**
-     * @return PriceType
+     * @return PriceProductType
      */
-    public function getPrice(): PriceType
+    public function getPrice(): PriceProductType
     {
         return $this->price;
     }
 
-    public function changeName(NameType $anotherName): void
+    public function changeName(NameProductType $anotherName): void
     {
         if (!$this->name->isEqualTo($anotherName)) {
             throw new DomainException('Same name.');

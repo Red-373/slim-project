@@ -6,7 +6,7 @@ namespace App\Model\Category\Type;
 
 use Webmozart\Assert\Assert;
 
-class NameType
+class NameCategoryType
 {
     private string $value;
 

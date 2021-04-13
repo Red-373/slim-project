@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Product\Entity;
 
-use App\Model\Product\Type\NameType;
+use App\Model\Product\Type\NameProductType;
 use App\Model\Type\UuidType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -30,7 +30,7 @@ class ProductRepository
                 ->getQuery()->getSingleScalarResult() > 0;
     }
 
-    public function hasProductByName(NameType $name): bool
+    public function hasProductByName(NameProductType $name): bool
     {
         return $this->repo->createQueryBuilder('t')
                 ->select('COUNT(t.id)')

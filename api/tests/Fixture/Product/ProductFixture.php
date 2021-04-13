@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Test\Fixture\Product;
 
 use App\Model\Category\Entity\Category;
-use App\Model\Category\Type\NameType as CategoryNameType;
+use App\Model\Category\Type\NameCategoryType as CategoryNameType;
 use App\Model\Product\Entity\Product;
-use App\Model\Product\Type\DescriptionType;
-use App\Model\Product\Type\NameType;
-use App\Model\Product\Type\PriceType;
+use App\Model\Product\Type\DescriptionProductType;
+use App\Model\Product\Type\NameProductType;
+use App\Model\Product\Type\PriceProductType;
 use App\Model\Tag\Entity\Tag;
 use App\Model\Tag\Type\NameTagType;
 use App\Model\Type\UuidType;
@@ -45,18 +45,18 @@ class ProductFixture extends AbstractFixture
     {
         return [
             self::$PRODUCT = new Product(
-                new NameType('FirstProductNameProductFixture'),
-                new DescriptionType('FirstProductDescriptionProductFixture'),
-                new PriceType(2.55),
+                new NameProductType('FirstProductNameProductFixture'),
+                new DescriptionProductType('FirstProductDescriptionProductFixture'),
+                new PriceProductType(2.55),
                 self::$CATEGORY = new Category(
                     UuidType::generate(),
                     new CategoryNameType('CategoryNameProductFixture'),
                 ),
             ),
             self::$SECOND_PRODUCT = new Product(
-                new NameType('SecondProductNameProductFixture'),
-                new DescriptionType('SecondProductDescriptionProductFixture'),
-                new PriceType(4.55)
+                new NameProductType('SecondProductNameProductFixture'),
+                new DescriptionProductType('SecondProductDescriptionProductFixture'),
+                new PriceProductType(4.55)
             ),
         ];
     }

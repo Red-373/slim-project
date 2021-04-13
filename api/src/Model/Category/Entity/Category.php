@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Entity;
 
-use App\Model\Category\Type\NameType;
+use App\Model\Category\Type\NameCategoryType;
 use App\Model\Product\Entity\Product;
 use App\Model\Type\UuidType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -28,10 +28,10 @@ class Category
     private UuidType $id;
 
     /**
-     * @var NameType
+     * @var NameCategoryType
      * @ORM\Column(type="category_name_type", unique=true)
      */
-    private NameType $name;
+    private NameCategoryType $name;
 
     /**
      * @var Collection
@@ -42,9 +42,9 @@ class Category
     /**
      * Category constructor.
      * @param UuidType $id
-     * @param NameType $name
+     * @param NameCategoryType $name
      */
-    public function __construct(UuidType $id, NameType $name)
+    public function __construct(UuidType $id, NameCategoryType $name)
     {
         $this->id = $id;
         $this->name = $name;
@@ -60,14 +60,14 @@ class Category
     }
 
     /**
-     * @return NameType
+     * @return NameCategoryType
      */
-    public function getName(): NameType
+    public function getName(): NameCategoryType
     {
         return $this->name;
     }
 
-    public function changeName(NameType $anotherName): void
+    public function changeName(NameCategoryType $anotherName): void
     {
         if ($this->name->isEqualTo($anotherName)) {
             throw new DomainException('Same name.');

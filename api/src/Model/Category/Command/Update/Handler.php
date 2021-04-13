@@ -6,7 +6,7 @@ namespace App\Model\Category\Command\Update;
 
 use App\Infrastructure\Doctrine\Flusher\Flusher;
 use App\Model\Category\Entity\CategoryRepository;
-use App\Model\Category\Type\NameType;
+use App\Model\Category\Type\NameCategoryType;
 use App\Model\Type\UuidType;
 use DomainException;
 
@@ -31,7 +31,7 @@ class Handler
 
         $category = $this->repository->getCategory($categoryId);
 
-        $category->changeName(new NameType($command->name));
+        $category->changeName(new NameCategoryType($command->name));
 
         $this->flusher->flush();
     }

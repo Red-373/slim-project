@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Doctrine\Type\Product;
 
-use App\Model\Product\Type\DescriptionType;
+use App\Model\Product\Type\DescriptionProductType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
@@ -14,12 +14,12 @@ class DescriptionTypeDb extends StringType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): string
     {
-        return $value instanceof DescriptionType ? $value->getValue() : (string)$value;
+        return $value instanceof DescriptionProductType ? $value->getValue() : (string)$value;
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?DescriptionType
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?DescriptionProductType
     {
-        return !empty($value) ? new DescriptionType((string)$value) : null;
+        return !empty($value) ? new DescriptionProductType((string)$value) : null;
     }
 
     public function getName(): string

@@ -8,9 +8,9 @@ use App\Infrastructure\Doctrine\Flusher\Flusher;
 use App\Model\Category\Entity\CategoryRepository;
 use App\Model\Product\Entity\Product;
 use App\Model\Product\Entity\ProductRepository;
-use App\Model\Product\Type\DescriptionType;
-use App\Model\Product\Type\NameType;
-use App\Model\Product\Type\PriceType;
+use App\Model\Product\Type\DescriptionProductType;
+use App\Model\Product\Type\NameProductType;
+use App\Model\Product\Type\PriceProductType;
 use App\Model\Type\UuidType;
 use DomainException;
 
@@ -33,9 +33,9 @@ class Handler
         $description = $command->description;
         $price = $command->price;
 
-        $productName = new NameType($name);
-        $productDescription = new DescriptionType($description);
-        $productPrice = new PriceType($price);
+        $productName = new NameProductType($name);
+        $productDescription = new DescriptionProductType($description);
+        $productPrice = new PriceProductType($price);
         $categoryId = !empty($command->categoryId) ? new UuidType($command->categoryId) : null;
 
         $category = null;

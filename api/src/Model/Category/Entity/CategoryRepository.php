@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Category\Entity;
 
-use App\Model\Category\Type\NameType;
+use App\Model\Category\Type\NameCategoryType;
 use App\Model\Type\UuidType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -62,7 +62,7 @@ class CategoryRepository
                 ->getQuery()->getSingleScalarResult() > 0;
     }
 
-    public function hasByName(NameType $name): bool
+    public function hasByName(NameCategoryType $name): bool
     {
         return $this->repo->createQueryBuilder('t')
                 ->select('COUNT(t.id)')

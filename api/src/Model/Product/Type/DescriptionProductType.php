@@ -6,14 +6,13 @@ namespace App\Model\Product\Type;
 
 use Webmozart\Assert\Assert;
 
-class NameType
+class DescriptionProductType
 {
     private string $value;
 
     public function __construct(string $value)
     {
-        Assert::regex($value, '/^[a-zA-Zа-яА-Яа]+$/u', 'The product name can have only letters and no have spaces.');
-        Assert::minLength($value, 3, 'The product name cannot be less 3 symbols.');
+        Assert::minLength($value, 3, 'The description cannot be less 3 symbols.');
 
         $this->value = $value;
     }

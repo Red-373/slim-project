@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\Type\Test;
 
-use App\Model\Category\Type\NameType;
+use App\Model\Category\Type\NameCategoryType;
 use App\Model\Type\UuidType;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
@@ -33,7 +33,7 @@ class UuidTypeTest extends TestCase
     public function testException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        new NameType('123');
+        new NameCategoryType('123');
     }
 
     public function testIsEqualTo(): void

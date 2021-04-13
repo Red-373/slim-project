@@ -6,7 +6,7 @@ namespace App\Model\Product\Type;
 
 use Webmozart\Assert\Assert;
 
-class PriceType
+class PriceProductType
 {
     private float $value;
 

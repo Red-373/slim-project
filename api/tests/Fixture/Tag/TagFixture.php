@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Test\Fixture\Tag;
 
 use App\Model\Category\Entity\Category;
-use App\Model\Category\Type\NameType as CategoryName;
+use App\Model\Category\Type\NameCategoryType as CategoryName;
 use App\Model\Product\Entity\Product;
-use App\Model\Product\Type\DescriptionType;
-use App\Model\Product\Type\NameType;
-use App\Model\Product\Type\PriceType;
+use App\Model\Product\Type\DescriptionProductType;
+use App\Model\Product\Type\NameProductType;
+use App\Model\Product\Type\PriceProductType;
 use App\Model\Tag\Entity\Tag;
 use App\Model\Tag\Type\NameTagType;
 use App\Model\Type\UuidType;
@@ -54,9 +54,9 @@ class TagFixture extends AbstractFixture
     {
         return [
             self::$PRODUCT = new Product(
-                new NameType('ProductNameTagFixture'),
-                new DescriptionType('ProductDescriptionTagFixture'),
-                new PriceType(249.99),
+                new NameProductType('ProductNameTagFixture'),
+                new DescriptionProductType('ProductDescriptionTagFixture'),
+                new PriceProductType(249.99),
                 new Category(UuidType::generate(), new CategoryName('CategoryNameTagFixture'))
             )
         ];

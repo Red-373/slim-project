@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Test\Fixture\Category;
 
 use App\Model\Category\Entity\Category;
-use App\Model\Category\Type\NameType;
+use App\Model\Category\Type\NameCategoryType;
 use App\Model\Product\Entity\Product;
-use App\Model\Product\Type\DescriptionType;
-use App\Model\Product\Type\NameType as ProductNameType;
-use App\Model\Product\Type\PriceType;
+use App\Model\Product\Type\DescriptionProductType;
+use App\Model\Product\Type\NameProductType as ProductNameType;
+use App\Model\Product\Type\PriceProductType;
 use App\Model\Type\UuidType;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Persistence\ObjectManager;
@@ -43,11 +43,11 @@ class CategoryFixture extends AbstractFixture
         return [
             self::$CATEGORY = new Category(
                 UuidType::generate(),
-                new NameType('CategoryFixtureCategoryName'),
+                new NameCategoryType('CategoryFixtureCategoryName'),
             ),
             self::$SECOND_CATEGORY = new Category(
                 UuidType::generate(),
-                new NameType('CategoryFixtureCategoryNameSec'),
+                new NameCategoryType('CategoryFixtureCategoryNameSec'),
             ),
         ];
     }
@@ -57,14 +57,14 @@ class CategoryFixture extends AbstractFixture
         return [
             self::$PRODUCT = new Product(
                 new ProductNameType('CategoryFixtureProductName'),
-                new DescriptionType('CategoryFixtureProductDesc'),
-                new PriceType(2.55),
+                new DescriptionProductType('CategoryFixtureProductDesc'),
+                new PriceProductType(2.55),
                 self::$CATEGORY
             ),
             self::$SECOND_PRODUCT = new Product(
                 new ProductNameType('CategoryFixtureProductNameSec'),
-                new DescriptionType('CategoryFixtureProductDescSec'),
-                new PriceType(4.55)
+                new DescriptionProductType('CategoryFixtureProductDescSec'),
+                new PriceProductType(4.55)
             ),
         ];
     }
