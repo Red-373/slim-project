@@ -11,11 +11,12 @@ use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Entities\Traits\AccessTokenTrait;
 use League\OAuth2\Server\Entities\Traits\EntityTrait;
 use League\OAuth2\Server\Entities\Traits\TokenEntityTrait;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class AccessTokenEntity
  * @ORM\Entity
- * @ORM\Table(name="oauth_access_tokens)
+ * @ORM\Table(name="oauth_access_tokens")
  */
 class AccessTokenEntity implements AccessTokenEntityInterface
 {

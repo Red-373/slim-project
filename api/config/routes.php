@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Action\HomeAction;
+use App\Http\Action\OAuthAction;
 use App\Http\Action\V1\Category\CategoryAction;
 use App\Http\Action\V1\Category\CategoryAddAction;
 use App\Http\Action\V1\Category\CategoryAllAction;
@@ -17,11 +18,17 @@ use App\Http\Action\V1\Product\ProductAttachTagAction;
 use App\Http\Action\V1\Tag\TagAction;
 use App\Http\Action\V1\Tag\TagAddAction;
 use App\Http\Action\V1\Tag\TagAttachProductAction;
+use App\Http\Middleware\OAuth\OAuthMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
+use Psr\Container\ContainerInterface;
 
-return static function (App $app): void {
+return static function (App $app, ContainerInterface $container): void {
     $app->get('/', HomeAction::class);
+    $app->post('/auth', OAuthAction::class);
+
+    $auth = $container->get(OAuthMiddleware::class);
+
     $app->group('/v1', function (RouteCollectorProxy $group) {
         $group->group('/categories', function (RouteCollectorProxy $group) {
             $group->get('', CategoryAction::class);
@@ -45,5 +52,5 @@ return static function (App $app): void {
             $group->post('/attach/products', TagAttachProductAction::class);
             $group->get('', TagAction::class);
         });
-    });
+    })->add($auth);
 };

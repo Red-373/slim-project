@@ -3,10 +3,14 @@
 declare(strict_types=1);
 
 use App\Infrastructure\Doctrine\Type\Category\NameTypeDb;
+use App\Infrastructure\Doctrine\Type\OAuth\ClientTypeDb;
+use App\Infrastructure\Doctrine\Type\OAuth\ScopesTypeDb;
 use App\Infrastructure\Doctrine\Type\Product\DescriptionTypeDb;
 use App\Infrastructure\Doctrine\Type\Product\NameTypeDb as ProductNameTypeDb;
 use App\Infrastructure\Doctrine\Type\Tag\NameTypeDb as TagNameTypeDb;
 use App\Infrastructure\Doctrine\Type\Product\PriceTypeDb;
+use App\Infrastructure\Doctrine\Type\User\EmailTypeDb;
+use App\Infrastructure\Doctrine\Type\User\PasswordTypeDb;
 use App\Infrastructure\Doctrine\Type\UuidTypeDb;
 use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\Common\Cache\FilesystemCache;
@@ -73,6 +77,8 @@ return [
                 __DIR__ . '/../../src/Model/Category/Entity',
                 __DIR__ . '/../../src/Model/Product/Entity',
                 __DIR__ . '/../../src/Model/Tag/Entity',
+                __DIR__ . '/../../src/Model/User/Entity',
+                __DIR__ . '/../../src/Model/OAuth/Entity',
             ],
             'types' => [
                 UuidTypeDb::NAME => UuidTypeDb::class,
@@ -83,6 +89,12 @@ return [
                 PriceTypeDb::NAME => PriceTypeDb::class,
 
                 TagNameTypeDb::NAME => TagNameTypeDb::class,
+
+                EmailTypeDb::NAME => EmailTypeDb::class,
+                PasswordTypeDb::NAME => PasswordTypeDb::class,
+
+                ClientTypeDb::NAME => ClientTypeDb::class,
+                ScopesTypeDb::NAME => ScopesTypeDb::class
             ],
         ]
     ]
