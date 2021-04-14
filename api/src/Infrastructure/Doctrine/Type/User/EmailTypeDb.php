@@ -8,7 +8,6 @@ use App\Model\User\Type\EmailType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
-
 class EmailTypeDb extends StringType
 {
     public const NAME = 'user_email';

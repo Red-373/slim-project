@@ -12,7 +12,7 @@ class PasswordType
 
     public function __construct(string $value)
     {
-        Assert::length($value,8, 'Password length.');
+        Assert::length($value, 8, 'Password length.');
 
         $this->value = $value;
     }

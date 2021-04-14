@@ -10,7 +10,8 @@ use League\OAuth2\Server\Entities\Traits\ScopeTrait;
 
 class ScopeEntity implements ScopeEntityInterface
 {
-    use EntityTrait, ScopeTrait;
+    use EntityTrait;
+    use ScopeTrait;
 
     public function __construct(string $identifier)
     {

@@ -6,21 +6,19 @@ namespace App\Model\OAuth\Repository;
 
 use App\Model\OAuth\Entity\RefreshTokenEntity;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
-    /**
-     * @var \Doctrine\ORM\EntityRepository
-     */
-    private $repo;
-    private $em;
+    private EntityManagerInterface $em;
+    private EntityRepository $repo;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, EntityRepository $repo)
     {
-        $this->repo = $em->getRepository(RefreshTokenEntity::class);
+        $this->repo = $repo;
         $this->em = $em;
     }
 

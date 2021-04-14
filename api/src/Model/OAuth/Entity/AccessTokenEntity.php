@@ -20,7 +20,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AccessTokenEntity implements AccessTokenEntityInterface
 {
-    use AccessTokenTrait, TokenEntityTrait, EntityTrait;
+    use AccessTokenTrait;
+    use TokenEntityTrait;
+    use EntityTrait;
 
     /**
      * @var string

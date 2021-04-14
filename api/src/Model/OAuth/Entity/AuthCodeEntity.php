@@ -18,7 +18,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class AuthCodeEntity implements AuthCodeEntityInterface
 {
-    use EntityTrait, TokenEntityTrait, AuthCodeTrait;
+    use EntityTrait;
+    use TokenEntityTrait;
+    use AuthCodeTrait;
 
     /**
      * @ORM\Column(type="string", length=80)

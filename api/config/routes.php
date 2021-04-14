@@ -21,13 +21,10 @@ use App\Http\Action\V1\Tag\TagAttachProductAction;
 use App\Http\Middleware\OAuth\OAuthMiddleware;
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
-use Psr\Container\ContainerInterface;
 
-return static function (App $app, ContainerInterface $container): void {
+return static function (App $app): void {
     $app->get('/', HomeAction::class);
     $app->post('/auth', OAuthAction::class);
-
-    $auth = $container->get(OAuthMiddleware::class);
 
     $app->group('/v1', function (RouteCollectorProxy $group) {
         $group->group('/categories', function (RouteCollectorProxy $group) {
@@ -52,5 +49,5 @@ return static function (App $app, ContainerInterface $container): void {
             $group->post('/attach/products', TagAttachProductAction::class);
             $group->get('', TagAction::class);
         });
-    })->add($auth);
+    })->add(OAuthMiddleware::class);
 };

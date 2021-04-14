@@ -2,6 +2,9 @@
 
 declare(strict_types=1);
 
+use App\Model\OAuth\Entity\AccessTokenEntity;
+use App\Model\OAuth\Entity\AuthCodeEntity;
+use App\Model\OAuth\Entity\RefreshTokenEntity;
 use App\Model\OAuth\Repository\AccessTokenRepository;
 use App\Model\OAuth\Repository\AuthCodeRepository;
 use App\Model\OAuth\Repository\ClientRepository;
@@ -12,6 +15,9 @@ use App\Model\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use League\OAuth2\Server;
+use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
+use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Psr\Container\ContainerInterface;
 
 return [
@@ -42,7 +48,7 @@ return [
 
         $grant = new Server\Grant\PasswordGrant($userRepository, $refreshTokenRepository);
         $grant->setRefreshTokenTTL(new DateInterval('P1M'));
-        $server->enableGrantType($grant, new DateInterval('PT1H'));
+        $server->enableGrantType($grant, new DateInterval('PT1M'));
 
         $grant = new Server\Grant\RefreshTokenGrant($refreshTokenRepository);
         $grant->setRefreshTokenTTL(new DateInterval('P1M'));
@@ -70,20 +76,29 @@ return [
     Server\Repositories\ScopeRepositoryInterface::class => function () {
         return new ScopeRepository();
     },
-    Server\Repositories\AuthCodeRepositoryInterface::class => function (ContainerInterface $container) {
-        return new AuthCodeRepository(
-            $container->get(EntityManagerInterface::class)
-        );
+    Server\Repositories\AuthCodeRepositoryInterface::class => function (ContainerInterface $container): AuthCodeRepositoryInterface {
+        $em = $container->get(EntityManagerInterface::class);
+
+        /** @var EntityRepository $repo */
+        $repo = $em->getRepository(AuthCodeEntity::class);
+
+        return new AuthCodeRepository($em, $repo);
     },
-    Server\Repositories\AccessTokenRepositoryInterface::class => function (ContainerInterface $container) {
-        return new AccessTokenRepository(
-            $container->get(EntityManagerInterface::class)
-        );
+    Server\Repositories\AccessTokenRepositoryInterface::class => function (ContainerInterface $container): AccessTokenRepositoryInterface {
+        $em = $container->get(EntityManagerInterface::class);
+
+        /** @var EntityRepository $repo */
+        $repo = $em->getRepository(AccessTokenEntity::class);
+
+        return new AccessTokenRepository($em, $repo);
     },
-    Server\Repositories\RefreshTokenRepositoryInterface::class => function (ContainerInterface $container) {
-        return new RefreshTokenRepository(
-            $container->get(EntityManagerInterface::class)
-        );
+    Server\Repositories\RefreshTokenRepositoryInterface::class => function (ContainerInterface $container): RefreshTokenRepositoryInterface {
+        $em = $container->get(EntityManagerInterface::class);
+
+        /** @var EntityRepository $repo */
+        $repo = $em->getRepository(RefreshTokenEntity::class);
+
+        return new RefreshTokenRepository($em, $repo);
     },
     Server\Repositories\UserRepositoryInterface::class => static function (ContainerInterface $container): Server\Repositories\UserRepositoryInterface {
         $em = $container->get(EntityManagerInterface::class);

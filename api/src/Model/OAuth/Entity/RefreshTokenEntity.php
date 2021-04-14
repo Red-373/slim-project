@@ -19,7 +19,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class RefreshTokenEntity implements RefreshTokenEntityInterface
 {
-    use RefreshTokenTrait, EntityTrait;
+    use RefreshTokenTrait;
+    use EntityTrait;
 
     /**
      * @ORM\Column(type="string", length=80)

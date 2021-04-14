@@ -12,7 +12,7 @@ class EmailType
 
     public function __construct(string $value)
     {
-        Assert::email($value,'Invalid email');
+        Assert::email($value, 'Invalid email');
 
         $this->value = $value;
     }

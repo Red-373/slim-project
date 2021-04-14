@@ -8,7 +8,7 @@ use League\OAuth2\Server\Entities\UserEntityInterface;
 
 class UserEntity implements UserEntityInterface
 {
-   private $identifier;
+    private $identifier;
 
     public function __construct($identifier)
     {
