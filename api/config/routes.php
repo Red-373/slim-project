@@ -24,7 +24,7 @@ use Slim\Routing\RouteCollectorProxy;
 
 return static function (App $app): void {
     $app->get('/', HomeAction::class);
-    $app->post('/auth', OAuthAction::class);
+    $app->post('/oauth', OAuthAction::class);
 
     $app->group('/v1', function (RouteCollectorProxy $group) {
         $group->group('/categories', function (RouteCollectorProxy $group) {
@@ -36,7 +36,7 @@ return static function (App $app): void {
             $group->post('/attach/products', CategoryAttachProductAction::class);
             $group->post('/detach/products', CategoryDetachProductAction::class);
             $group->delete('/delete', CategoryDeleteAction::class);
-        });
+        })->add(OAuthMiddleware::class);
 
         $group->group('/products', function (RouteCollectorProxy $group) {
             $group->post('/add', ProductAddAction::class);
@@ -49,5 +49,5 @@ return static function (App $app): void {
             $group->post('/attach/products', TagAttachProductAction::class);
             $group->get('', TagAction::class);
         });
-    })->add(OAuthMiddleware::class);
+    });
 };

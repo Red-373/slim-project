@@ -19,20 +19,29 @@ class CategoryDeleteActionTest extends WebTestCase
     public function testSuccess(): void
     {
         $category = CategoryFixture::$CATEGORY;
-
         $body = [
             'id' => $category->getId()->getValue(),
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete')
-            ->withParsedBody($body);
-
+        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals([], $data);
+    }
+
+    public function testGuest(): void
+    {
+        $category = CategoryFixture::$CATEGORY;
+        $body = [
+            'id' => $category->getId()->getValue(),
+        ];
+
+        $request = self::json('DELETE', '/v1/categories/delete', $body);
+        $response = $this->app()->handle($request);
+
+        self::assertEquals(401, $response->getStatusCode());
     }
 
     public function testFailBlankRequest(): void
@@ -41,11 +50,8 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => '',
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete')
-            ->withParsedBody($body);
-
+        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -53,7 +59,6 @@ class CategoryDeleteActionTest extends WebTestCase
                 'id' => 'This value should not be blank.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -64,11 +69,8 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => 'invalidUuid',
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete')
-            ->withParsedBody($body);
-
+        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -76,7 +78,6 @@ class CategoryDeleteActionTest extends WebTestCase
                 'id' => 'This is not a valid UUID.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -88,17 +89,13 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => $undefinedId,
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete')
-            ->withParsedBody($body);
-
+        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
             'message' => 'Not found category id = ' . $undefinedId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }

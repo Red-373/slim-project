@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210414103932 extends AbstractMigration
+final class Version20210415090535 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -25,11 +25,9 @@ final class Version20210414103932 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN category.id IS \'(DC2Type:uuid_type)\'');
         $this->addSql('COMMENT ON COLUMN category.name IS \'(DC2Type:category_name_type)\'');
         $this->addSql('CREATE TABLE oauth_access_tokens (identifier VARCHAR(80) NOT NULL, expiry_date_time TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, user_identifier UUID NOT NULL, client VARCHAR(255) NOT NULL, scopes JSON NOT NULL, PRIMARY KEY(identifier))');
+        $this->addSql('COMMENT ON COLUMN oauth_access_tokens.expiry_date_time IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN oauth_access_tokens.user_identifier IS \'(DC2Type:uuid_type)\'');
         $this->addSql('COMMENT ON COLUMN oauth_access_tokens.client IS \'(DC2Type:oauth_client)\'');
-        $this->addSql('CREATE TABLE oauth_auth_codes (identifier VARCHAR(80) NOT NULL, redirect_uri VARCHAR(255) NOT NULL, expiry_date_time TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, user_identifier UUID NOT NULL, client VARCHAR(255) NOT NULL, scopes JSON NOT NULL, PRIMARY KEY(identifier, redirect_uri))');
-        $this->addSql('COMMENT ON COLUMN oauth_auth_codes.user_identifier IS \'(DC2Type:uuid_type)\'');
-        $this->addSql('COMMENT ON COLUMN oauth_auth_codes.client IS \'(DC2Type:oauth_client)\'');
         $this->addSql('CREATE TABLE oauth_refresh_tokens (identifier VARCHAR(80) NOT NULL, access_token_identifier VARCHAR(80) NOT NULL, expiry_date_time TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(identifier))');
         $this->addSql('CREATE INDEX IDX_5AB6878E5675DC ON oauth_refresh_tokens (access_token_identifier)');
         $this->addSql('CREATE TABLE product (id UUID NOT NULL, category_id UUID DEFAULT NULL, name VARCHAR(255) NOT NULL, description VARCHAR(255) NOT NULL, price DOUBLE PRECISION NOT NULL, PRIMARY KEY(id))');
@@ -49,7 +47,6 @@ final class Version20210414103932 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN tag.id IS \'(DC2Type:uuid_type)\'');
         $this->addSql('COMMENT ON COLUMN tag.name IS \'(DC2Type:tag_name_type)\'');
         $this->addSql('CREATE TABLE user_users (id UUID NOT NULL, email VARCHAR(255) NOT NULL, password VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_F6415EB135C246D5 ON user_users (password)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_F6415EB1E7927C74 ON user_users (email)');
         $this->addSql('COMMENT ON COLUMN user_users.id IS \'(DC2Type:uuid_type)\'');
         $this->addSql('COMMENT ON COLUMN user_users.email IS \'(DC2Type:user_email)\'');
@@ -69,7 +66,6 @@ final class Version20210414103932 extends AbstractMigration
         $this->addSql('ALTER TABLE products_tags DROP CONSTRAINT FK_E3AB5A2CBAD26311');
         $this->addSql('DROP TABLE category');
         $this->addSql('DROP TABLE oauth_access_tokens');
-        $this->addSql('DROP TABLE oauth_auth_codes');
         $this->addSql('DROP TABLE oauth_refresh_tokens');
         $this->addSql('DROP TABLE product');
         $this->addSql('DROP TABLE products_tags');

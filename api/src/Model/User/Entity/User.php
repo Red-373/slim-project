@@ -26,13 +26,13 @@ class User
 
     /**
      * @var EmailType
-     * @ORM\Column(type="user_email", unique=true)
+     * @ORM\Column(type="user_email")
      */
     private EmailType $email;
 
     /**
      * @var PasswordType
-     * @ORM\Column(type="user_password", unique=true)
+     * @ORM\Column(type="user_password")
      */
     private PasswordType $password;
 

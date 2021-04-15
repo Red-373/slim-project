@@ -20,7 +20,6 @@ class CategoryDetachProductActionTest extends WebTestCase
     {
         $id = CategoryFixture::$CATEGORY->getId()->getValue();
         $productId = CategoryFixture::$PRODUCT->getId()->getValue();
-
         $body = [
             'id' => $id,
             'products' => [
@@ -28,13 +27,29 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals([], $data);
+    }
+
+    public function testGuest(): void
+    {
+        $id = CategoryFixture::$CATEGORY->getId()->getValue();
+        $productId = CategoryFixture::$PRODUCT->getId()->getValue();
+        $body = [
+            'id' => $id,
+            'products' => [
+                $productId,
+            ]
+        ];
+
+        $request = self::json('POST', '/v1/categories/detach/products', $body);
+        $response = $this->app()->handle($request);
+
+        self::assertEquals(401, $response->getStatusCode());
     }
 
     public function testFailEmptyRequest(): void
@@ -46,9 +61,8 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -57,7 +71,6 @@ class CategoryDetachProductActionTest extends WebTestCase
                 'products[0]' => 'This value should not be blank.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -71,9 +84,8 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -82,7 +94,6 @@ class CategoryDetachProductActionTest extends WebTestCase
                 'products[0]' => 'This is not a valid UUID.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -91,7 +102,6 @@ class CategoryDetachProductActionTest extends WebTestCase
     {
         $undefinedId = UuidType::generate()->getValue();
         $undefinedProductId = UuidType::generate()->getValue();
-
         $body = [
             'id' => $undefinedId,
             'products' => [
@@ -99,14 +109,13 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
         $message = [
             'message' => 'Not found category. Category id = ' . $undefinedId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($message, $data);
     }
@@ -115,7 +124,6 @@ class CategoryDetachProductActionTest extends WebTestCase
     {
         $id = CategoryFixture::$CATEGORY->getId()->getValue();
         $undefinedProductId = UuidType::generate()->getValue();
-
         $body = [
             'id' => $id,
             'products' => [
@@ -123,14 +131,13 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
         $message = [
             'message' => 'Not found product. Product id = ' . $undefinedProductId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($message, $data);
 
@@ -140,7 +147,6 @@ class CategoryDetachProductActionTest extends WebTestCase
     {
         $id = CategoryFixture::$CATEGORY->getId()->getValue();
         $productId = CategoryFixture::$SECOND_PRODUCT->getId()->getValue();
-
         $body = [
             'id' => $id,
             'products' => [
@@ -148,14 +154,13 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
         $message = [
             'message' => 'This product dont have category id. Product id = ' . $productId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($message, $data);
     }
@@ -164,7 +169,6 @@ class CategoryDetachProductActionTest extends WebTestCase
     {
         $id = CategoryFixture::$SECOND_CATEGORY->getId()->getValue();
         $productId = CategoryFixture::$SECOND_PRODUCT->getId()->getValue();
-
         $body = [
             'id' => $id,
             'products' => [
@@ -172,14 +176,13 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products')->withParsedBody($body);
+        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
         $message = [
             'message' => 'This product dont have category id. Product id = ' . $productId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($message, $data);
     }

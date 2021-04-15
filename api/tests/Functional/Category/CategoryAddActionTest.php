@@ -21,31 +21,35 @@ class CategoryAddActionTest extends WebTestCase
             'name' => 'UniqueName',
         ];
 
-        $request = self::json('POST', '/v1/categories/add')
-            ->withParsedBody($body);
-
+        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals([], $data);
     }
 
+    public function testGuest()
+    {
+        $body = [
+            'name' => 'UniqueName',
+        ];
+
+        $request = self::json('POST', '/v1/categories/add', $body);
+        $response = $this->app()->handle($request);
+
+        self::assertEquals(401, $response->getStatusCode());
+    }
+
     public function testFailCategoryAlreadySet(): void
     {
-        $request = self::json('POST', '/v1/categories/add');
-
         $name = CategoryFixture::$CATEGORY->getName()->getValue();
-
         $body = [
             'name' => $name,
         ];
 
-        $request = $request->withParsedBody($body);
-
+        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -58,16 +62,12 @@ class CategoryAddActionTest extends WebTestCase
 
     public function testFailRegexName(): void
     {
-        $request = self::json('POST', '/v1/categories/add');
-
         $body = [
             'name' => 'invalidName123',
         ];
 
-        $request = $request->withParsedBody($body);
-
+        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $error = [
@@ -82,16 +82,12 @@ class CategoryAddActionTest extends WebTestCase
 
     public function testFailLengthName(): void
     {
-        $request = self::json('POST', '/v1/categories/add');
-
         $body = [
             'name' => 'le',
         ];
 
-        $request = $request->withParsedBody($body);
-
+        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $error = [

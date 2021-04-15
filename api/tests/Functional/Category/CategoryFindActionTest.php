@@ -21,9 +21,9 @@ class CategoryFindActionTest extends WebTestCase
         $secondCategory = CategoryFixture::$SECOND_CATEGORY;
         $product = CategoryFixture::$PRODUCT;
 
-        $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue()));
-
-        $data = json_decode($response->getBody()->getContents(), true);
+        $request = self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue(), [], CategoryFixture::getAuthHeader());
+        $response = $this->app()->handle($request);
+        $data = json_decode((string)$response->getBody(), true);
 
         $categories = [
             [
@@ -44,47 +44,54 @@ class CategoryFindActionTest extends WebTestCase
                 "products" => []
             ]
         ];
-
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals($categories, $data);
     }
 
+    public function testGuest(): void
+    {
+        $category = CategoryFixture::$CATEGORY;
+
+        $request = self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue());
+        $response = $this->app()->handle($request);
+
+        self::assertEquals(401, $response->getStatusCode());
+    }
+
     public function testFailUndefinedName(): void
     {
-        $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name=notfound'));
-
-        $data = json_decode($response->getBody()->getContents(), true);
+        $request = self::json('GET', '/v1/categories/find?name=notfound', [], CategoryFixture::getAuthHeader());
+        $response = $this->app()->handle($request);
+        $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals([], $data);
     }
 
     public function testFailEmptyName(): void
     {
-        $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name='));
-
-        $data = json_decode($response->getBody()->getContents(), true);
+        $request = self::json('GET', '/v1/categories/find?name=', [], CategoryFixture::getAuthHeader());
+        $response = $this->app()->handle($request);
+        $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
             'errors' => [
                 'name' => 'This value is too short. It should have 3 characters or more.'
             ]
         ];
-
         self::assertEquals($errors, $data);
     }
 
     public function testFailLengthName(): void
     {
-        $response = $this->app()->handle(self::json('GET', '/v1/categories/find?name='));
-
-        $data = json_decode($response->getBody()->getContents(), true);
+        $request = self::json('GET', '/v1/categories/find?name=', [], CategoryFixture::getAuthHeader());
+        $response = $this->app()->handle($request);
+        $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
             'errors' => [
                 'name' => 'This value is too short. It should have 3 characters or more.'
             ]
         ];
-
         self::assertEquals($errors, $data);
     }
 }

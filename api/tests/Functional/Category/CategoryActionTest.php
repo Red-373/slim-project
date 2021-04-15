@@ -20,7 +20,7 @@ class CategoryActionTest extends WebTestCase
         $id = CategoryFixture::$CATEGORY->getId()->getValue();
         $name = CategoryFixture::$CATEGORY->getName()->getValue();
 
-        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=' . $id));
+        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=' . $id, [], CategoryFixture::getAuthHeader()));
 
         $data = json_decode($response->getBody()->getContents(), true);
 
@@ -29,9 +29,18 @@ class CategoryActionTest extends WebTestCase
         self::assertEquals($id, $data['id']);
     }
 
+    public function testGuest()
+    {
+        $id = CategoryFixture::$CATEGORY->getId()->getValue();
+
+        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=' . $id));
+
+        self::assertEquals(401, $response->getStatusCode());
+    }
+
     public function testFailEmptyId(): void
     {
-        $response = $this->app()->handle(self::json('GET', '/v1/categories?id='));
+        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=', [], CategoryFixture::getAuthHeader()));
 
         $data = json_decode($response->getBody()->getContents(), true);
 
@@ -46,7 +55,7 @@ class CategoryActionTest extends WebTestCase
 
     public function testFailIncorrectId(): void
     {
-        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=IncorrectId'));
+        $response = $this->app()->handle(self::json('GET', '/v1/categories?id=IncorrectId', [], CategoryFixture::getAuthHeader()));
 
         $data = json_decode($response->getBody()->getContents(), true);
 

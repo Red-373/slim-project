@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Model\OAuth\Repository;
 
 use App\Model\OAuth\Entity\UserEntity;
-use App\Model\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -25,7 +24,6 @@ class UserRepository implements UserRepositoryInterface
 
     public function getUserEntityByUserCredentials($username, $password, $grantType, ClientEntityInterface $clientEntity): ?UserEntityInterface
     {
-        /** @var User $user */
         if ($user = $this->repo->findOneBy(['email' => $username])) {
             if ($password !== $user->getPassword()->getValue()) {
                 return null;

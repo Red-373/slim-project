@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Model\OAuth\Entity;
 
-use DateTime;
+use DateTimeImmutable;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
@@ -32,8 +32,8 @@ class AccessTokenEntity implements AccessTokenEntityInterface
     protected $identifier;
 
     /**
-     * @var DateTime
-     * @ORM\Column(type="datetime", name="expiry_date_time")
+     * @var DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable", name="expiry_date_time")
      */
     protected $expiryDateTime;
 

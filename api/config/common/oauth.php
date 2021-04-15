@@ -3,10 +3,8 @@
 declare(strict_types=1);
 
 use App\Model\OAuth\Entity\AccessTokenEntity;
-use App\Model\OAuth\Entity\AuthCodeEntity;
 use App\Model\OAuth\Entity\RefreshTokenEntity;
 use App\Model\OAuth\Repository\AccessTokenRepository;
-use App\Model\OAuth\Repository\AuthCodeRepository;
 use App\Model\OAuth\Repository\ClientRepository;
 use App\Model\OAuth\Repository\RefreshTokenRepository;
 use App\Model\OAuth\Repository\ScopeRepository;
@@ -16,7 +14,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use League\OAuth2\Server;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
-use League\OAuth2\Server\Repositories\AuthCodeRepositoryInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 use Psr\Container\ContainerInterface;
 
@@ -27,7 +24,6 @@ return [
         $clientRepository = $container->get(Server\Repositories\ClientRepositoryInterface::class);
         $scopeRepository = $container->get(Server\Repositories\ScopeRepositoryInterface::class);
         $accessTokenRepository = $container->get(Server\Repositories\AccessTokenRepositoryInterface::class);
-        $authCodeRepository = $container->get(Server\Repositories\AuthCodeRepositoryInterface::class);
         $refreshTokenRepository = $container->get(Server\Repositories\RefreshTokenRepositoryInterface::class);
         $userRepository = $container->get(Server\Repositories\UserRepositoryInterface::class);
 
@@ -39,20 +35,13 @@ return [
             $config['encryption_key']
         );
 
-        $grant = new Server\Grant\AuthCodeGrant($authCodeRepository, $refreshTokenRepository, new DateInterval('PT10M'));
-        $server->enableGrantType($grant, new DateInterval('PT1H'));
-
-        $server->enableGrantType(new Server\Grant\ClientCredentialsGrant(), new DateInterval('PT1H'));
-
-        $server->enableGrantType(new Server\Grant\ImplicitGrant(new DateInterval('PT1H')));
-
         $grant = new Server\Grant\PasswordGrant($userRepository, $refreshTokenRepository);
         $grant->setRefreshTokenTTL(new DateInterval('P1M'));
         $server->enableGrantType($grant, new DateInterval('PT1M'));
 
         $grant = new Server\Grant\RefreshTokenGrant($refreshTokenRepository);
         $grant->setRefreshTokenTTL(new DateInterval('P1M'));
-        $server->enableGrantType($grant, new DateInterval('PT1H'));
+        $server->enableGrantType($grant, new DateInterval('PT1M'));
 
         return $server;
     },
@@ -75,14 +64,6 @@ return [
     },
     Server\Repositories\ScopeRepositoryInterface::class => function () {
         return new ScopeRepository();
-    },
-    Server\Repositories\AuthCodeRepositoryInterface::class => function (ContainerInterface $container): AuthCodeRepositoryInterface {
-        $em = $container->get(EntityManagerInterface::class);
-
-        /** @var EntityRepository $repo */
-        $repo = $em->getRepository(AuthCodeEntity::class);
-
-        return new AuthCodeRepository($em, $repo);
     },
     Server\Repositories\AccessTokenRepositoryInterface::class => function (ContainerInterface $container): AccessTokenRepositoryInterface {
         $em = $container->get(EntityManagerInterface::class);
@@ -111,8 +92,8 @@ return [
 
     'config' => [
         'oauth' => [
-            'public_key_path' => __DIR__ . '/../../' . 'public.key',
-            'private_key_path' => __DIR__ . '/../../' . 'private.key',
+            'public_key_path' => __DIR__ . '/../../public.key',
+            'private_key_path' => __DIR__ . '/../../private.key',
             'encryption_key' => 'lxZFUEsBCJ2Yb14IF2ygAHI5N4+ZAUXXaSeeJm6+twsUmIen',
             'clients' => [
                 'app' => [
