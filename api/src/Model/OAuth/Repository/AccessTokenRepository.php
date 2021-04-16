@@ -41,15 +41,23 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         }
 
         $this->em->persist($accessTokenEntity);
-        $this->em->flush();
+        //$this->em->flush();
     }
 
     public function revokeAccessToken($tokenId): void
     {
         if ($token = $this->repo->find($tokenId)) {
             $this->em->remove($token);
-            $this->em->flush();
+            //$this->em->flush();
         }
+    }
+
+    public function getAccessTokensByUserId($userId): array
+    {
+        return $this->repo->createQueryBuilder('t')
+            ->andWhere('t.userIdentifier = :userIdentifier')
+            ->setParameter(':userIdentifier', $userId)
+            ->getQuery()->getResult();
     }
 
     public function isAccessTokenRevoked($tokenId): bool

@@ -12,6 +12,9 @@ use App\Model\OAuth\Repository\UserRepository;
 use App\Model\User\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Lcobucci\JWT\Configuration;
+use Lcobucci\JWT\Signer\Key\InMemory;
+use Lcobucci\JWT\Signer\Rsa\Sha256;
 use League\OAuth2\Server;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
@@ -37,11 +40,11 @@ return [
 
         $grant = new Server\Grant\PasswordGrant($userRepository, $refreshTokenRepository);
         $grant->setRefreshTokenTTL(new DateInterval('P1M'));
-        $server->enableGrantType($grant, new DateInterval('PT1M'));
+        $server->enableGrantType($grant, new DateInterval('PT1H'));
 
         $grant = new Server\Grant\RefreshTokenGrant($refreshTokenRepository);
         $grant->setRefreshTokenTTL(new DateInterval('P1M'));
-        $server->enableGrantType($grant, new DateInterval('PT1M'));
+        $server->enableGrantType($grant, new DateInterval('PT1H'));
 
         return $server;
     },
@@ -88,6 +91,12 @@ return [
         $repo = $em->getRepository(User::class);
 
         return new UserRepository($em, $repo);
+    },
+    Configuration::class => static function (): Configuration {
+        return Configuration::forSymmetricSigner(
+            new Sha256(),
+            InMemory::plainText('')
+        );
     },
 
     'config' => [
