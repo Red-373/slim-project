@@ -30,8 +30,8 @@ class CategoryFixture extends AbstractFixture
     public static Product $PRODUCT;
     public static Product $SECOND_PRODUCT;
 
-    public static User $USER;
-    public static string $TOKEN;
+    //public static User $USER;
+    //public static string $TOKEN;
 
     public function load(ObjectManager $manager)
     {
@@ -46,17 +46,17 @@ class CategoryFixture extends AbstractFixture
             $manager->persist($product);
         }
 
-        $this->createAuthToken($manager);
+        //$this->createAuthToken($manager);
 
         $manager->flush();
     }
 
-    public static function getAuthHeader(): array
+    /*public static function getAuthHeader(): array
     {
         return [
             'Authorization' => 'Bearer ' . self::$TOKEN,
         ];
-    }
+    }*/
 
     private function createCategories(): array
     {
@@ -89,7 +89,7 @@ class CategoryFixture extends AbstractFixture
         ];
     }
 
-    private function createAuthToken(ObjectManager $manager): void
+    /*private function createAuthToken(ObjectManager $manager): void
     {
         self::$USER = new User(
             new EmailType('categoryfixture@example.com'),
@@ -110,5 +110,5 @@ class CategoryFixture extends AbstractFixture
         $manager->persist($token);
 
         self::$TOKEN = (string)$token;
-    }
+    }*/
 }

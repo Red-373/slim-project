@@ -18,7 +18,7 @@ use League\OAuth2\Server\CryptKey;
 class OAuthFixture extends AbstractFixture
 {
     public static User $USER;
-    public static string $TOKEN;
+    //public static string $TOKEN;
 
     public function load(ObjectManager $manager)
     {
@@ -29,7 +29,7 @@ class OAuthFixture extends AbstractFixture
 
         $manager->persist(self::$USER);
 
-        $token = new AccessTokenEntity();
+        /*$token = new AccessTokenEntity();
         $token->setIdentifier(bin2hex(random_bytes(40)));
         $token->setUserIdentifier(self::$USER->getId()->getValue());
         $token->setExpiryDateTime(new DateTimeImmutable('+1 hour'));
@@ -40,15 +40,15 @@ class OAuthFixture extends AbstractFixture
 
         $manager->persist($token);
 
-        self::$TOKEN =(string)$token;
+        self::$TOKEN =(string)$token;*/
 
         $manager->flush();
     }
 
-    public function getHeaders(): array
+    /*public function getHeaders(): array
     {
         return [
             'Authorization' => 'Bearer ' . self::$TOKEN,
         ];
-    }
+    }*/
 }

@@ -15,6 +15,8 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 use Slim\Psr7\Factory\ServerRequestFactory;
+use Test\Fixture\Category\CategoryFixture;
+use Test\Fixture\OAuth\OAuthFixture;
 
 class WebTestCase extends TestCase
 {
@@ -28,9 +30,9 @@ class WebTestCase extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-//        if (!self::$HEADERS) {
-//            self::$HEADERS = $this->getHeaderLocalStorage();
-//        }
+        if (!self::$HEADERS) {
+            self::$HEADERS = $this->getHeaderLocalStorage();
+        }
     }
 
     protected function tearDown(): void
@@ -44,6 +46,7 @@ class WebTestCase extends TestCase
         $em->getConnection()->close();
 
         $this->app = null;
+        self::$HEADERS = null;
 
         parent::tearDown();
     }
@@ -100,7 +103,7 @@ class WebTestCase extends TestCase
 
     private function getHeaderLocalStorage(): array
     {
-        $postData = [
+        /*$postData = [
             'login' => getenv('OAUTH_USERNAME') ?? 'admin2@test.com',
             'password' => getenv('OAUTH_PASSWORD') ?? '123456',
         ];
@@ -113,6 +116,21 @@ class WebTestCase extends TestCase
         return [
             'X-Satrap-1' => $satrap1,
             'X-Satrap-2' => $satrap2
+        ];*/
+
+        $this->loadFixtures([OAuthFixture::class]);
+        $postData = [
+            'grant_type' => 'password',
+            'username' => 'oauth@example.com',
+            'password' => 'password',
+            'client_id' => 'app',
+            'client_secret' => ''
+        ];
+        $response = $this->app()->handle(self::json('POST', '/oauth', $postData));
+        $data = json_decode((string)$response->getBody(), true);
+
+        return [
+            'Authorization' => 'Bearer ' . $data['access_token'],
         ];
     }
 
@@ -138,7 +156,7 @@ class WebTestCase extends TestCase
         /** @var EntityManagerInterface $em */
         $em = $container->get(EntityManagerInterface::class);
         $executor = new ORMExecutor($em, new ORMPurger($em));
-        $executor->execute($loader->getFixtures());
+        $executor->execute($loader->getFixtures(), true);
         $em->getConnection()->close();
     }
 

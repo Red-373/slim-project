@@ -13,12 +13,12 @@
          verbose="true">
     <testsuites>
         <testsuite name="default">
-            <directory suffix="Test.php">tests/Functional</directory>
-            <directory suffix="Test.php">tests/Unit</directory>
+            <directory suffix="Test.php">tests/Functional/Category/CategoryActionTest.php</directory>
+            <!--<directory suffix="Test.php">tests/Unit</directory>
             <directory suffix="Test.php">src/Model/Type/Test</directory>
             <directory suffix="Test.php">src/Model/Category/Type/Test</directory>
             <directory suffix="Test.php">src/Model/Product/Type/Test</directory>
-            <directory suffix="Test.php">src/Model/Tag/Type/Test</directory>
+            <directory suffix="Test.php">src/Model/Tag/Type/Test</directory>-->
         </testsuite>
     </testsuites>
 
