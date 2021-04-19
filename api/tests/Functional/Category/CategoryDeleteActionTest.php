@@ -23,7 +23,7 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => $category->getId()->getValue(),
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('DELETE', '/v1/categories/delete', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -50,7 +50,7 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => '',
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('DELETE', '/v1/categories/delete', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -69,7 +69,7 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => 'invalidUuid',
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('DELETE', '/v1/categories/delete', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -89,7 +89,7 @@ class CategoryDeleteActionTest extends WebTestCase
             'id' => $undefinedId,
         ];
 
-        $request = self::json('DELETE', '/v1/categories/delete', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('DELETE', '/v1/categories/delete', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 

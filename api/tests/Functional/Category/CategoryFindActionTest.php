@@ -21,7 +21,7 @@ class CategoryFindActionTest extends WebTestCase
         $secondCategory = CategoryFixture::$SECOND_CATEGORY;
         $product = CategoryFixture::$PRODUCT;
 
-        $request = self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue(), [], CategoryFixture::getAuthHeader());
+        $request = self::json('GET', '/v1/categories/find?name=' . $category->getName()->getValue(), [], self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -60,7 +60,7 @@ class CategoryFindActionTest extends WebTestCase
 
     public function testFailUndefinedName(): void
     {
-        $request = self::json('GET', '/v1/categories/find?name=notfound', [], CategoryFixture::getAuthHeader());
+        $request = self::json('GET', '/v1/categories/find?name=notfound', [], self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -69,7 +69,7 @@ class CategoryFindActionTest extends WebTestCase
 
     public function testFailEmptyName(): void
     {
-        $request = self::json('GET', '/v1/categories/find?name=', [], CategoryFixture::getAuthHeader());
+        $request = self::json('GET', '/v1/categories/find?name=', [], self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -83,7 +83,7 @@ class CategoryFindActionTest extends WebTestCase
 
     public function testFailLengthName(): void
     {
-        $request = self::json('GET', '/v1/categories/find?name=', [], CategoryFixture::getAuthHeader());
+        $request = self::json('GET', '/v1/categories/find?name=', [], self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 

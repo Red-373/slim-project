@@ -15,7 +15,6 @@ use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\App;
 use Slim\Psr7\Factory\ServerRequestFactory;
-use Test\Fixture\Category\CategoryFixture;
 use Test\Fixture\OAuth\OAuthFixture;
 
 class WebTestCase extends TestCase
@@ -82,24 +81,24 @@ class WebTestCase extends TestCase
     }
 
 
-    protected function getHeaderOAuthData(): array
+    /*protected function getHeaderOAuthData(): array
     {
         return self::getHeaderLocalStorage();
     }
 
-//    private function getHeaderCookie(): array
-//    {
-//        $postData = [
-//            'login' => 'admin@test.com',
-//            'password' => '123456',
-//        ];
-//
-//        $response = $this->app()->handle(self::json('POST', '/v1/admins/login', $postData));
-//        $oauth = FigResponseCookies::get($response, 'oauth')->getValue();
-//        return [
-//            'Cookie' => 'oauth=' . $oauth
-//        ];
-//    }
+    private function getHeaderCookie(): array
+    {
+        $postData = [
+            'login' => 'admin@test.com',
+            'password' => '123456',
+        ];
+
+        $response = $this->app()->handle(self::json('POST', '/v1/admins/login', $postData));
+        $oauth = FigResponseCookies::get($response, 'oauth')->getValue();
+        return [
+            'Cookie' => 'oauth=' . $oauth
+        ];
+    }*/
 
     private function getHeaderLocalStorage(): array
     {

@@ -23,7 +23,7 @@ class CategoryUpdateActionTest extends WebTestCase
             'name' => 'NewName',
         ];
 
-        $request = self::json('PUT', '/v1/categories/update', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('PUT', '/v1/categories/update', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -51,7 +51,7 @@ class CategoryUpdateActionTest extends WebTestCase
             'name' => CategoryFixture::$CATEGORY->getName()->getValue(),
         ];
 
-        $request = self::json('PUT', '/v1/categories/update', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('PUT', '/v1/categories/update', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -69,7 +69,7 @@ class CategoryUpdateActionTest extends WebTestCase
             'name' => '',
         ];
 
-        $request = self::json('PUT', '/v1/categories/update', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('PUT', '/v1/categories/update', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -90,7 +90,7 @@ class CategoryUpdateActionTest extends WebTestCase
             'name' => 'Name',
         ];
 
-        $request = self::json('PUT', '/v1/categories/update', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('PUT', '/v1/categories/update', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -110,7 +110,7 @@ class CategoryUpdateActionTest extends WebTestCase
             'name' => 'Na',
         ];
 
-        $request = self::json('PUT', '/v1/categories/update', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('PUT', '/v1/categories/update', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -131,7 +131,7 @@ class CategoryUpdateActionTest extends WebTestCase
             'name' => 'Name',
         ];
 
-        $request = self::json('PUT', '/v1/categories/update', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('PUT', '/v1/categories/update', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 

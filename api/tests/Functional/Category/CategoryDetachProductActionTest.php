@@ -27,7 +27,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -61,7 +61,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -84,7 +84,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -109,7 +109,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -131,7 +131,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -154,7 +154,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -176,7 +176,7 @@ class CategoryDetachProductActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/categories/detach/products', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/detach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 

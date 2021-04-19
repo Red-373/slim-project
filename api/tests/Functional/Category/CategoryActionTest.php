@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Test\Functional\Category;
 
 use Test\Fixture\Category\CategoryFixture;
-use Test\Fixture\OAuth\OAuthFixture;
 use Test\Functional\WebTestCase;
 
 class CategoryActionTest extends WebTestCase

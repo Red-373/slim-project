@@ -21,7 +21,7 @@ class CategoryAddActionTest extends WebTestCase
             'name' => 'UniqueName',
         ];
 
-        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/add', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -48,7 +48,7 @@ class CategoryAddActionTest extends WebTestCase
             'name' => $name,
         ];
 
-        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/add', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -66,7 +66,7 @@ class CategoryAddActionTest extends WebTestCase
             'name' => 'invalidName123',
         ];
 
-        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/add', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -86,7 +86,7 @@ class CategoryAddActionTest extends WebTestCase
             'name' => 'le',
         ];
 
-        $request = self::json('POST', '/v1/categories/add', $body, CategoryFixture::getAuthHeader());
+        $request = self::json('POST', '/v1/categories/add', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 

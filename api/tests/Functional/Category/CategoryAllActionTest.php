@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Test\Functional\Category;
 
 use Test\Fixture\Category\CategoryFixture;
-use Test\Fixture\OAuth\OAuthFixture;
 use Test\Functional\WebTestCase;
 
 class CategoryAllActionTest extends WebTestCase
@@ -13,7 +12,7 @@ class CategoryAllActionTest extends WebTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->loadFixtures([CategoryFixture::class, OAuthFixture::class]);
+        $this->loadFixtures([CategoryFixture::class]);
     }
 
     public function testSuccess(): void
@@ -22,7 +21,7 @@ class CategoryAllActionTest extends WebTestCase
         $secondCategory = CategoryFixture::$SECOND_CATEGORY;
         $product = CategoryFixture::$PRODUCT;
 
-        $request = self::json('GET', '/v1/categories/all', [], CategoryFixture::getAuthHeader());
+        $request = self::json('GET', '/v1/categories/all', [], self::$HEADERS);
 
         $response = $this->app()->handle($request);
         $data = json_decode($response->getBody()->getContents(), true);
