@@ -63,7 +63,6 @@ class CategoryAttachProductActionTest extends WebTestCase
 
         $request = self::json('POST', '/v1/categories/attach/products', $body, self::$HEADERS);
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [

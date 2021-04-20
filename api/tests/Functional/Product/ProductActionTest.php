@@ -18,17 +18,14 @@ class ProductActionTest extends WebTestCase
 
     public function testSuccess(): void
     {
-        $product= ProductFixture::$PRODUCT;
-
+        $product = ProductFixture::$PRODUCT;
         $queryParams = [
             'id' => $product->getId()->getValue()
         ];
 
-        $request = self::json('GET', '/v1/products')
+        $request = self::json('GET', '/v1/products', [], self::$HEADERS)
             ->withQueryParams($queryParams);
-
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $product = [
@@ -38,7 +35,6 @@ class ProductActionTest extends WebTestCase
             'price' => $product->getPrice()->getValue(),
             'category_id' => $product->getCategory()->getId()->getValue(),
         ];
-
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals($product, $data);
     }
@@ -49,11 +45,9 @@ class ProductActionTest extends WebTestCase
             'id' => ''
         ];
 
-        $request = self::json('GET', '/v1/products')
+        $request = self::json('GET', '/v1/products', [], self::$HEADERS)
             ->withQueryParams($queryParams);
-
         $response = $this->app()->handle($request);
-
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -61,7 +55,6 @@ class ProductActionTest extends WebTestCase
                 'id' => 'This value should not be blank.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -72,7 +65,7 @@ class ProductActionTest extends WebTestCase
             'id' => 'InvalidProductId'
         ];
 
-        $request = self::json('GET', '/v1/products')
+        $request = self::json('GET', '/v1/products', [], self::$HEADERS)
             ->withQueryParams($queryParams);
 
         $response = $this->app()->handle($request);
@@ -96,7 +89,7 @@ class ProductActionTest extends WebTestCase
             'id' => $undefinedId
         ];
 
-        $request = self::json('GET', '/v1/products')
+        $request = self::json('GET', '/v1/products', [], self::$HEADERS)
             ->withQueryParams($queryParams);
 
         $response = $this->app()->handle($request);

@@ -21,11 +21,8 @@ class TagAddActionTest extends WebTestCase
             'name' => 'UniqueName',
         ];
 
-        $request = self::json('POST', '/v1/tags/add')
-            ->withParsedBody($body);
 
-        $response = $this->app()->handle($request);
-
+        $response = $this->app()->handle(self::json('POST', '/v1/tags/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
@@ -40,11 +37,7 @@ class TagAddActionTest extends WebTestCase
             'product' => $productId
         ];
 
-        $request = self::json('POST', '/v1/tags/add')
-            ->withParsedBody($body);
-
-        $response = $this->app()->handle($request);
-
+        $response = $this->app()->handle(self::json('POST', '/v1/tags/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
@@ -54,18 +47,16 @@ class TagAddActionTest extends WebTestCase
     public function testFailTagAlreadySet(): void
     {
         $name = TagFixture::$TAG->getName()->getValue();
-
         $body = [
             'name' => $name,
         ];
-        $request = self::json('POST', '/v1/tags/add')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/tags/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
             'message' => 'Tag already set!'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -75,8 +66,8 @@ class TagAddActionTest extends WebTestCase
         $body = [
             'name' => 'na',
         ];
-        $request = self::json('POST', '/v1/tags/add')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/tags/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -84,7 +75,6 @@ class TagAddActionTest extends WebTestCase
                 'name' => 'This value is too short. It should have 3 characters or more.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -95,8 +85,8 @@ class TagAddActionTest extends WebTestCase
             'name' => 'UniqueName',
             'product' => 'NotValidUUid'
         ];
-        $request = self::json('POST', '/v1/tags/add')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/tags/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -104,7 +94,6 @@ class TagAddActionTest extends WebTestCase
                 'productId' => 'This is not a valid UUID.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }

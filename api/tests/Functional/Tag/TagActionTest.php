@@ -19,12 +19,11 @@ class TagActionTest extends WebTestCase
     public function testSuccess()
     {
         $tagId = TagFixture::$TAG->getId()->getValue();
-
         $queryParams = [
             'id' => $tagId,
         ];
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
 
+        $request = self::json('GET', '/v1/tags', [], self::$HEADERS)->withQueryParams($queryParams);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -32,7 +31,6 @@ class TagActionTest extends WebTestCase
             'id' => $tagId,
             'products' => []
         ];
-
         self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
         self::assertEquals(200, $response->getStatusCode());
         self::assertEquals($tags, $data);
@@ -43,8 +41,8 @@ class TagActionTest extends WebTestCase
         $queryParams = [
             'id' => '',
         ];
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
 
+        $request = self::json('GET', '/v1/tags', [], self::$HEADERS)->withQueryParams($queryParams);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -53,7 +51,6 @@ class TagActionTest extends WebTestCase
                 'id' => 'This value should not be blank.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -63,8 +60,8 @@ class TagActionTest extends WebTestCase
         $queryParams = [
             'id' => 'incorrectUuid',
         ];
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
 
+        $request = self::json('GET', '/v1/tags', [], self::$HEADERS)->withQueryParams($queryParams);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
@@ -73,7 +70,6 @@ class TagActionTest extends WebTestCase
                 'id' => 'This is not a valid UUID.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -85,15 +81,13 @@ class TagActionTest extends WebTestCase
             'id' => $undefinedId,
         ];
 
-        $request = self::json('GET', '/v1/tags')->withQueryParams($queryParams);
-
+        $request = self::json('GET', '/v1/tags', [], self::$HEADERS)->withQueryParams($queryParams);
         $response = $this->app()->handle($request);
         $data = json_decode((string)$response->getBody(), true);
 
         $message = [
             'message' => 'Not found tag.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($message, $data);
     }

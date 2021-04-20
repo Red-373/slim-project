@@ -129,7 +129,7 @@ class WebTestCase extends TestCase
         $data = json_decode((string)$response->getBody(), true);
 
         return [
-            'Authorization' => 'Bearer ' . $data['access_token'],
+            'Authorization' => 'Bearer ' . $data['access_token']
         ];
     }
 

@@ -18,9 +18,6 @@ class ProductAddActionsTest extends WebTestCase
     public function testSuccess()
     {
         $categoryId = CategoryFixture::$CATEGORY->getId()->getValue();
-
-        $request = self::json('POST', '/v1/products/add');
-
         $body = [
             'category_id' => $categoryId,
             'name' => 'UniqueName',
@@ -28,10 +25,7 @@ class ProductAddActionsTest extends WebTestCase
             'description' => 'Lalalalala lalal alal',
         ];
 
-        $request = $request->withParsedBody($body);
-
-        $response = $this->app()->handle($request);
-
+        $response = $this->app()->handle(self::json('POST', '/v1/products/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals('application/json', $response->getHeaderLine('Content-Type'));
@@ -42,9 +36,6 @@ class ProductAddActionsTest extends WebTestCase
     public function testFailNotFoundCategory()
     {
         $id = 'b4eb097b-1b32-4121-bccb-41bdbb240492';
-
-        $request = self::json('POST', '/v1/products/add');
-
         $body = [
             'category_id' => $id,
             'name' => 'Nokia',
@@ -52,9 +43,7 @@ class ProductAddActionsTest extends WebTestCase
             'description' => 'Lalalalala lalal alal',
         ];
 
-        $request = $request->withParsedBody($body);
-        $response = $this->app()->handle($request);
-
+        $response = $this->app()->handle(self::json('POST', '/v1/products/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertTrue($data['message'] === 'Not found category.');
@@ -64,9 +53,6 @@ class ProductAddActionsTest extends WebTestCase
     public function testFailIncorrectValues()
     {
         $id = 'a0cd6990-10bf-43cd-a5f6-c037c4b969eeE';
-
-        $request = self::json('POST', '/v1/products/add');
-
         $body = [
             'category_id' => $id,
             'name' => '',
@@ -74,9 +60,8 @@ class ProductAddActionsTest extends WebTestCase
             'description' => '',
         ];
 
-        $request = $request->withParsedBody($body);
-        $response = $this->app()->handle($request);
 
+        $response = $this->app()->handle(self::json('POST', '/v1/products/add', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertTrue($data['errors']['categoryId'] === 'This is not a valid UUID.');

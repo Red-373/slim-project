@@ -20,7 +20,6 @@ class ProductAttachTagActionTest extends WebTestCase
     {
         $productId = ProductFixture::$PRODUCT->getId()->getValue();
         $tagId = ProductFixture::$TAG->getId()->getValue();
-
         $body = [
             'id' => $productId,
             'tags' => [
@@ -28,11 +27,8 @@ class ProductAttachTagActionTest extends WebTestCase
             ]
         ];
 
-        $request = self::json('POST', '/v1/products/attach/tags')
-            ->withParsedBody($body);
 
-        $response = $this->app()->handle($request);
-
+        $response = $this->app()->handle(self::json('POST', '/v1/products/attach/tags', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         self::assertEquals(200, $response->getStatusCode());
@@ -47,8 +43,8 @@ class ProductAttachTagActionTest extends WebTestCase
                 ''
             ]
         ];
-        $request = self::json('POST', '/v1/products/attach/tags')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/products/attach/tags', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -57,7 +53,6 @@ class ProductAttachTagActionTest extends WebTestCase
                 'tags[0]' => 'This value should not be blank.'
             ]
         ];
-
         self::assertEquals(422, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -70,8 +65,8 @@ class ProductAttachTagActionTest extends WebTestCase
                 'NotValidId'
             ]
         ];
-        $request = self::json('POST', '/v1/products/attach/tags')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/products/attach/tags', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
@@ -89,21 +84,19 @@ class ProductAttachTagActionTest extends WebTestCase
     {
         $undefinedId = UuidType::generate()->getValue();
         $tagId = ProductFixture::$TAG->getId()->getValue();
-
         $body = [
             'id' => $undefinedId,
             'tags' => [
                 $tagId
             ]
         ];
-        $request = self::json('POST', '/v1/products/attach/tags')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/products/attach/tags', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
             'message' => 'Not found product. Product id = ' . $undefinedId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }
@@ -112,21 +105,19 @@ class ProductAttachTagActionTest extends WebTestCase
     {
         $productId = ProductFixture::$PRODUCT->getId()->getValue();
         $undefinedId = UuidType::generate()->getValue();
-
         $body = [
             'id' => $productId,
             'tags' => [
                 $undefinedId
             ]
         ];
-        $request = self::json('POST', '/v1/products/attach/tags')->withParsedBody($body);
-        $response = $this->app()->handle($request);
+
+        $response = $this->app()->handle(self::json('POST', '/v1/products/attach/tags', $body, self::$HEADERS));
         $data = json_decode((string)$response->getBody(), true);
 
         $errors = [
             'message' => 'Not found tag. Tag id = ' . $undefinedId . '.'
         ];
-
         self::assertEquals(409, $response->getStatusCode());
         self::assertEquals($errors, $data);
     }

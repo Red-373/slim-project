@@ -1,3 +1,5 @@
+init: docker-down-clear  docker-pull docker-build docker-up
+
 code-check: lint phpcs
 
 docker-up:
